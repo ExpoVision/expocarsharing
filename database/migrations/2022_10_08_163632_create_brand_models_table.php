@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('brand_models', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->foreignId('brand_id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
