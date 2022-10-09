@@ -4,12 +4,15 @@ namespace App\Versions\V1\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Vehicle;
+use Illuminate\Database\Eloquent\Builder;
 
 class VehicleRepository
 {
     public function __construct(
-        protected Vehicle $vehicle
+        public Vehicle $vehicle,
+        public Builder $vehicleBuilder
     ) {
+        $this->vehicleBuilder = $this->vehicle->with(['brand', 'brandModel', 'color']);
     }
 
     /**
@@ -19,6 +22,6 @@ class VehicleRepository
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->vehicle->paginate($perPage);
+        return $this->vehicleBuilder->paginate($perPage);
     }
 }

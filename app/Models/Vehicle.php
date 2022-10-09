@@ -34,6 +34,11 @@ class Vehicle extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function color(): BelongsTo
+    {
+        return $this->belongsTo(Color::class);
+    }
+
     public function brandModel(): BelongsTo
     {
         return $this->belongsTo(BrandModel::class);
