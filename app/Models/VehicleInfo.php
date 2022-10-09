@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class VehicleInfo extends Model
 {
     use HasFactory;
+    use HasVehicle;
 
+    // FIXME: Refactor to enums
     public const UNIT_KM = 'KM';
     public const UNIT_MILE = 'MILE';
     public const UNIT_FT = 'FT';
@@ -28,4 +33,23 @@ class VehicleInfo extends Model
         self::TRANSMISSION_MANUAL => 'ручная',
         self::TRANSMISSION_CVT => 'CVT',
     ];
+
+    protected $fillable = [
+        'power_reserve',
+        'power_reserve_unit',
+        'consumption',
+        'horsepower',
+        'transmission',
+        'multimedia',
+        'seats',
+    ];
+
+    protected $casts = [
+        'multimedia' => 'boolean',
+    ];
+
+    public function bodyType(): BelongsTo
+    {
+        return $this->belongsTo(BodyType::class);
+    }
 }

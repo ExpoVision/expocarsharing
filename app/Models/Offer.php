@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Offer extends Model
 {
     use HasFactory;
+    use HasVehicle;
 
+    // FIXME: Refactor to enums
     public const STATUS_AVAILABLE = 'AVAILABLE';
     public const STATUS_RESERVED = 'RESERVED';
     public const STATUS_UNAVAILABLE = 'UNAVAILABLE';
@@ -22,4 +26,23 @@ class Offer extends Model
         self::STATUS_BROKEN => 'сломано',
         self::STATUS_ERROR => '¯\_(ツ)_/¯',
     ];
+
+    protected $fillable = [
+        'per_minute',
+        'status',
+    ];
+
+    protected $casts = [
+        'started_at' => 'datetime',
+    ];
+
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
