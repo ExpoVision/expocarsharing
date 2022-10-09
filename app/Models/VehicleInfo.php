@@ -9,13 +9,13 @@ class VehicleInfo extends Model
 {
     use HasFactory;
 
-    public const UNIT_KM = 'km';
-    public const UNIT_MILE = 'mile';
-    public const UNIT_FT = 'ft';
+    public const UNIT_KM = 'KM';
+    public const UNIT_MILE = 'MILE';
+    public const UNIT_FT = 'FT';
 
-    public const TRANSMISSION_AUTO = 'auto';
-    public const TRANSMISSION_MANUAL = 'manual';
-    public const TRANSMISSION_CVT = 'cvt';
+    public const TRANSMISSION_AUTO = 'AUTO';
+    public const TRANSMISSION_MANUAL = 'MANUAL';
+    public const TRANSMISSION_CVT = 'CVT';
 
     public static array $units = [
         self::UNIT_KM => 'км',

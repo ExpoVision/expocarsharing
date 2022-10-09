@@ -9,11 +9,11 @@ class Offer extends Model
 {
     use HasFactory;
 
-    public const STATUS_AVAILABLE = 'available';
-    public const STATUS_RESERVED = 'reserved';
-    public const STATUS_UNAVAILABLE = 'unavailable';
-    public const STATUS_BROKEN = 'broken';
-    public const STATUS_ERROR = 'error';
+    public const STATUS_AVAILABLE = 'AVAILABLE';
+    public const STATUS_RESERVED = 'RESERVED';
+    public const STATUS_UNAVAILABLE = 'UNAVAILABLE';
+    public const STATUS_BROKEN = 'BROKEN';
+    public const STATUS_ERROR = 'ERROR';
 
     public static array $statuses = [
         self::STATUS_AVAILABLE => 'доступные для аренда',
