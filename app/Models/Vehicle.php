@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Filters\FilterBuilder;
+use App\Traits\HasFilter;
 
 class Vehicle extends Model
 {
     use HasFactory;
+    use HasFilter;
+
+    public const FILTER_FOLDER = 'Vehicle';
 
     protected $fillable = [
         'brand_id',
@@ -24,6 +30,7 @@ class Vehicle extends Model
         'year' => 'date',
     ];
 
+
     public function bodyType(): BelongsTo
     {
         return $this->belongsTo(BodyType::class);
@@ -32,6 +39,11 @@ class Vehicle extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function color(): BelongsTo
+    {
+        return $this->belongsTo(Color::class);
     }
 
     public function brandModel(): BelongsTo
