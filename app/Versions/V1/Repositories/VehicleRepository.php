@@ -9,10 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 class VehicleRepository
 {
     public function __construct(
-        public Vehicle $vehicle,
-        public Builder $vehicleBuilder
+        public Builder $vehicle,
     ) {
-        $this->vehicleBuilder = $this->vehicle->with(['brand', 'brandModel', 'color']);
+        $this->vehicle = app(Vehicle::class)->with(['brand', 'brandModel', 'color']);
     }
 
     /**
@@ -22,6 +21,6 @@ class VehicleRepository
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->vehicleBuilder->paginate($perPage);
+        return $this->vehicle->paginate($perPage);
     }
 }

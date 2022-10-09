@@ -16,6 +16,8 @@ class VehicleController extends Controller
 
     public function index(Request $request): VehicleCollection
     {
+        $this->repository->vehicle->filterBy($request->all());
+
         return new VehicleCollection($this->repository->paginate());
     }
 }
