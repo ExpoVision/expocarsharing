@@ -4,7 +4,7 @@ namespace App\Filters\Vehicle;
 
 use App\Filters\FilterContract;
 
-class MileageFilter implements FilterContract
+class MileageFilter extends FilterContract
 {
     public function handle(string|array $value): void
     {
