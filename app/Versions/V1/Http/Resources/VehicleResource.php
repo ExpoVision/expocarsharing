@@ -20,15 +20,16 @@ class VehicleResource extends JsonResource
         $brand = new BrandResource($this->whenLoaded('brand'));
         $model = new BrandModelResource($this->whenLoaded('brandModel'));
         $color = new ColorResource($this->whenLoaded('color'));
-        $info = new VehicleInfoResource($this->whenLoaded('info'));
+        $info  = new VehicleInfoResource($this->whenLoaded('info'));
+        $class = new VehicleClassResource($this->whenLoaded('class'));
 
-        $relations = compact('brand', 'model', 'color', 'info');
+        $relations = compact('brand', 'model', 'color', 'info', 'class');
 
         return [
             'id' => $this->id,
             'name' => "$brand->name $model->name",
             'mileage' => $this->mileage,
-            'year' => $this->year->format('Y'),
+            'year' => $this->year,
             ...$relations,
         ];
     }

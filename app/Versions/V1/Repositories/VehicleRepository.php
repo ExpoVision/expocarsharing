@@ -11,7 +11,7 @@ class VehicleRepository
     public function __construct(
         public Builder $vehicle,
     ) {
-        $this->vehicle = app(Vehicle::class)->with(['brand', 'brandModel', 'color']);
+        $this->vehicle = app(Vehicle::class)->with(['brand', 'brandModel', 'color', 'class']);
     }
 
     /**
