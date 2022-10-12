@@ -17,8 +17,8 @@ class VehicleResource extends JsonResource
      */
     public function toArray($request)
     {
-        $brand = new BrandResource($this->whenLoaded('brand'));
-        $model = new BrandModelResource($this->whenLoaded('brandModel'));
+        $brand = new BrandResource($this->brand);
+        $model = new BrandModelResource($this->brandModel);
         $color = new ColorResource($this->whenLoaded('color'));
         $info  = new VehicleInfoResource($this->whenLoaded('info'));
         $class = new VehicleClassResource($this->whenLoaded('class'));

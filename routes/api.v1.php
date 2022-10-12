@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('/vehicle', VehicleController::class);
+Route::get('catalog', [VehicleController::class, 'catalog'])->name('vehicle.catalog');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
