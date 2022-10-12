@@ -1,9 +1,10 @@
 <?php
 
-use App\Models\Offer;
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Carbon;
 
 return new class extends Migration
 {
@@ -14,13 +15,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('offers', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained()
+            $table->foreignId('offer_id');
+            $table->foreignId('user_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->float('per_minute');
-            $table->enum('status', array_keys(Offer::$statuses));
+            $table->timestamp('started_at')->default(Carbon::now());
+            $table->timestamp('finished_at')->nullable();
+            $table->enum('status', array_keys(Order::$statuses));
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offers');
+        Schema::dropIfExists('orders');
     }
 };

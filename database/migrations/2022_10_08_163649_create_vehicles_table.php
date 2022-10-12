@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id');
-            $table->foreignId('brand_model_id');
-            $table->foreignId('color_id');
-            $table->foreignId('vehicle_info_id');
+            $table->foreignId('brand_id')->constrained();
+            $table->foreignId('brand_model_id')->constrained();
+            $table->foreignId('color_id')->constrained();
             $table->float('mileage');
             $table->year('year');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
