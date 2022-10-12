@@ -43,8 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function offer(): HasOne
+    public function order(): HasOne
     {
-        return $this->hasOne(Offer::class);
+        return $this->hasOne(Order::class);
     }
 }

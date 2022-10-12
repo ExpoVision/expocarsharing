@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Filters\FilterBuilder;
 use App\Traits\HasFilter;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vehicle extends Model
 {
     use HasFactory;
     use HasFilter;
+    use SoftDeletes;
 
     public const FILTER_FOLDER = 'Vehicle';
 
@@ -25,11 +25,6 @@ class Vehicle extends Model
         'mileage',
         'year',
     ];
-
-    protected $casts = [
-        'year' => 'date',
-    ];
-
 
     public function bodyType(): BelongsTo
     {

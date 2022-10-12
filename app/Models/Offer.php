@@ -6,43 +6,32 @@ use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Offer extends Model
 {
     use HasFactory;
     use HasVehicle;
+    use SoftDeletes;
 
-    // FIXME: Refactor to enums
-    public const STATUS_AVAILABLE = 'AVAILABLE';
-    public const STATUS_RESERVED = 'RESERVED';
+    public const STATUS_AVAILABLE   = 'AVAILABLE';
     public const STATUS_UNAVAILABLE = 'UNAVAILABLE';
-    public const STATUS_BROKEN = 'BROKEN';
-    public const STATUS_ERROR = 'ERROR';
 
     public static array $statuses = [
-        self::STATUS_AVAILABLE => 'доступные для аренда',
-        self::STATUS_RESERVED => 'забронировано для аренды',
-        self::STATUS_UNAVAILABLE => 'в аренде',
-        self::STATUS_BROKEN => 'сломано',
-        self::STATUS_ERROR => '¯\_(ツ)_/¯',
+        self::STATUS_AVAILABLE   => 'доступно для аренды',
+        self::STATUS_UNAVAILABLE => 'активная аренда',
     ];
 
-    protected $fillable = [
-        'per_minute',
-        'status',
-    ];
-
-    protected $casts = [
-        'started_at' => 'datetime',
-    ];
+    protected $fillable = ['per_minute'];
 
     public function vehicle(): BelongsTo
     {
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function user(): BelongsTo
+    public function order(): HasOne
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(Order::class);
     }
 }
