@@ -6,7 +6,6 @@ use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class VehicleInfo extends Model
 {
@@ -53,8 +52,8 @@ class VehicleInfo extends Model
         return $this->belongsTo(BodyType::class);
     }
 
-    public function vehicle(): HasOne
+    public function vehicle(): BelongsTo
     {
-        return $this->hasOne(Vehicle::class);
+        return $this->belongsTo(Vehicle::class);
     }
 }

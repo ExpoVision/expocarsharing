@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('brand_id')->constrained();
             $table->foreignId('brand_model_id')->constrained();
             $table->foreignId('color_id')->constrained();
-            $table->foreignId('vehicle_info_id')->constrained();
             $table->float('mileage');
             $table->year('year');
             $table->softDeletes();

@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('vehicle_infos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('body_type_id')->constrained();
+            $table->foreignId('vehicle_id')->constrained();
             $table->float('power_reserve');
             $table->enum('power_reserve_unit', array_keys(VehicleInfo::$units))->default();
             $table->float('consumption');

@@ -46,9 +46,9 @@ class Vehicle extends Model
         return $this->belongsTo(BrandModel::class);
     }
 
-    public function info(): BelongsTo
+    public function info(): HasOne
     {
-        return $this->belongsTo(VehicleInfo::class);
+        return $this->hasOne(VehicleInfo::class);
     }
 
     public function offer(): HasOne

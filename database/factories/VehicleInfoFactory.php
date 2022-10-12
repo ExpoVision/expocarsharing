@@ -22,6 +22,7 @@ class VehicleInfoFactory extends Factory
     {
         return [
             'body_type_id' => BodyType::factory()->create()->id,
+            'vehicle_id' => Vehicle::factory()->create()->id,
             'power_reserve' => $this->faker->numberBetween(200, 1810),
             'power_reserve_unit' => $this->faker->randomElement(array_keys(VehicleInfo::$units)),
             'consumption' => $this->faker->randomFloat(1, 0, 30),
