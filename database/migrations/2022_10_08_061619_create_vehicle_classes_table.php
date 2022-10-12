@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('vehicle_classes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->constrained();
-            $table->foreignId('brand_model_id')->constrained();
-            $table->foreignId('color_id')->constrained();
-            $table->foreignId('vehicle_class_id')->constrained();
-            $table->float('mileage');
-            $table->year('year');
-            $table->softDeletes();
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('vehicle_classes');
     }
 };

@@ -55,4 +55,9 @@ class Vehicle extends Model
     {
         return $this->hasOne(Offer::class);
     }
+
+    public function class(): BelongsTo
+    {
+        return $this->belongsTo(VehicleClass::class);
+    }
 }
