@@ -16,7 +16,8 @@ return new class extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained()
+            $table->foreignId('vehicle_id')->unique()
+                ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->float('per_minute');
