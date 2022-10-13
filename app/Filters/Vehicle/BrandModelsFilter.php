@@ -5,11 +5,11 @@ namespace App\Filters\Vehicle;
 use App\Filters\FilterContract;
 use Illuminate\Database\Eloquent\Builder;
 
-class BrandsFilter extends FilterContract
+class BrandModelsFilter extends FilterContract
 {
     public function handle(string|array $value): void
     {
-        $this->query->whereHas('brand', function (Builder $query) use ($value) {
+        $this->query->whereHas('brandModel', function (Builder $query) use ($value) {
             $query->whereIn('id', $value);
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasFilter;
 use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,9 @@ class Offer extends Model
     use HasFactory;
     use HasVehicle;
     use SoftDeletes;
+    use HasFilter;
+
+    public const FILTER_FOLDER = 'Offer';
 
     public const STATUS_AVAILABLE   = 'AVAILABLE';
     public const STATUS_UNAVAILABLE = 'UNAVAILABLE';
