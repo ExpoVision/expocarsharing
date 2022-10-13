@@ -11,6 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    /**
+     * 3 бургера с 1ой куриной котлетой
+     * 2 стрипсы в стаканчике + 2 сырных соуса
+     * картошка фри в тарелке + 2 сырных соуса 1 томатный
+     */
     use HasFactory;
     use HasVehicle;
     use SoftDeletes;
