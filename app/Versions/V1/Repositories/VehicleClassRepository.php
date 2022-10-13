@@ -3,18 +3,19 @@
 namespace App\Versions\V1\Repositories;
 
 use App\Models\VehicleClass;
+use App\Traits\HasFilterFormFill;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class VehicleClassRepository
 {
-    public VehicleClass $class;
+    use HasFilterFormFill;
 
     public function __construct(
         public Builder $builder
     ) {
-        $this->class = app(VehicleClass::class);
+        $this->builder = app(VehicleClass::class)->query();
     }
 
     public function certainWithVehicles(?int $perGroup): Collection
