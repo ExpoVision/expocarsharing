@@ -4,15 +4,11 @@ namespace App\Versions\V1\Repositories;
 
 use App\Models\Color;
 use App\Traits\HasFilterFormFill;
-use Illuminate\Database\Eloquent\Builder;
+use App\Versions\V1\Contracts\RepositoryContract;
 
-class ColorRepository
+class ColorRepository extends RepositoryContract
 {
     use HasFilterFormFill;
 
-    public function __construct(
-        public Builder $builder
-    ) {
-        $this->builder = app(Color::class)->query();
-    }
+    public const MODEL = Color::class;
 }

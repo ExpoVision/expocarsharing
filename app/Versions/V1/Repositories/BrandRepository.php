@@ -4,15 +4,11 @@ namespace App\Versions\V1\Repositories;
 
 use App\Models\Brand;
 use App\Traits\HasFilterFormFill;
-use Illuminate\Database\Eloquent\Builder;
+use App\Versions\V1\Contracts\RepositoryContract;
 
-class BrandRepository
+class BrandRepository extends RepositoryContract
 {
     use HasFilterFormFill;
 
-    public function __construct(
-        public Builder $builder
-    ) {
-        $this->builder = app(Brand::class)->query();
-    }
+    public const MODEL = Brand::class;
 }

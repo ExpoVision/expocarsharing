@@ -4,10 +4,11 @@ namespace App\Versions\V1\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Vehicle;
+use App\Versions\V1\Contracts\RepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class VehicleRepository
+class VehicleRepository extends RepositoryContract
 {
     public function __construct(
         public Builder $builder,

@@ -16,7 +16,7 @@ class OfferController extends Controller
 
     public function index(Request $request): OfferCollection
     {
-        $this->repository->offer->filterBy($request->all());
+        $this->repository->builder->filterBy($request->all());
 
         return new OfferCollection($this->repository->paginate());
     }
