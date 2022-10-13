@@ -1,5 +1,6 @@
 <?php
 
+use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
 
 Route::apiResource('/vehicle', VehicleController::class);
 

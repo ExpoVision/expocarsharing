@@ -1,8 +1,14 @@
 <?php
 
-namespace App\Versions\V1\Repositories;
+namespace App\Versions\V1\Http\Controllers\Api;
 
-class FilterRepository
+use App\Versions\V1\Http\Controllers\Controller;
+use App\Versions\V1\Repositories\BrandModelRepository;
+use App\Versions\V1\Repositories\BrandRepository;
+use App\Versions\V1\Repositories\ColorRepository;
+use App\Versions\V1\Repositories\VehicleClassRepository;
+
+class FilterController extends Controller
 {
     public function __construct(
         public BrandRepository $brandRepository,
