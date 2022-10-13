@@ -27,6 +27,11 @@ class VehicleRepository extends RepositoryContract
         return $this->builder->paginate($perPage);
     }
 
+    public function getById(int $id): Vehicle
+    {
+        return $this->builder->findOrFail($id);
+    }
+
     public function groupedByClass(?int $perGroup = null): Collection
     {
         return $this->classRepository->certainWithVehicles($perGroup);
