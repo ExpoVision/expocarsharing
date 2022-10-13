@@ -9,10 +9,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class OfferRepository extends RepositoryContract
 {
+    public const MODEL = Offer::class;
+
     public function __construct(
         public Builder $builder
     ) {
-        $this->builder = app(Offer::class)->with(['vehicle']);
+        $this->builder = app(self::MODEL)->with(['vehicle']);
     }
 
     public function paginate(?int $perPage = null): LengthAwarePaginator
