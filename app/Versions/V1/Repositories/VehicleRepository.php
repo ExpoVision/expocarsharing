@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Collection;
 class VehicleRepository
 {
     public function __construct(
-        public Builder $vehicle,
+        public Builder $builder,
         public VehicleClassRepository $classRepository,
     ) {
-        $this->vehicle = app(Vehicle::class)->with(['brand', 'brandModel', 'color', 'class']);
+        $this->builder = app(Vehicle::class)->with(['brand', 'brandModel', 'color', 'class']);
     }
 
     /**
@@ -23,7 +23,7 @@ class VehicleRepository
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->vehicle->paginate($perPage);
+        return $this->builder->paginate($perPage);
     }
 
     public function groupedByClass(?int $perGroup = null): Collection
