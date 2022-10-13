@@ -4,14 +4,17 @@ namespace App\Versions\V1\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Vehicle;
+use App\Versions\V1\Contracts\RepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
-class VehicleRepository
+class VehicleRepository extends RepositoryContract
 {
     public function __construct(
-        public Builder $vehicle,
+        public Builder $builder,
+        public VehicleClassRepository $classRepository,
     ) {
-        $this->vehicle = app(Vehicle::class)->with(['brand', 'brandModel', 'color']);
+        $this->builder = app(Vehicle::class)->with(['brand', 'brandModel', 'color', 'class']);
     }
 
     /**
@@ -21,6 +24,16 @@ class VehicleRepository
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->vehicle->paginate($perPage);
+        return $this->builder->paginate($perPage);
+    }
+
+    public function getById(int $id): Vehicle
+    {
+        return $this->builder->findOrFail($id);
+    }
+
+    public function groupedByClass(?int $perGroup = null): Collection
+    {
+        return $this->classRepository->certainWithVehicles($perGroup);
     }
 }

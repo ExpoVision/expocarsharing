@@ -1,5 +1,7 @@
 <?php
 
+use App\Versions\V1\Http\Controllers\Api\FilterController;
+use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
+
 Route::apiResource('/vehicle', VehicleController::class);
+
+Route::apiResource('offer', OfferController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

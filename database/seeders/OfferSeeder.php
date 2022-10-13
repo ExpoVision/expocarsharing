@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\VehicleInfo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Offer;
 
-class VehicleInfoSeeder extends Seeder
+class OfferSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class VehicleInfoSeeder extends Seeder
      */
     public function run()
     {
-        VehicleInfo::factory(141)->create();
+        Offer::factory(140)->create();
     }
 }

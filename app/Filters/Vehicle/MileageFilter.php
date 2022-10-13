@@ -3,18 +3,10 @@
 namespace App\Filters\Vehicle;
 
 use App\Filters\FilterContract;
-use Illuminate\Database\Eloquent\Builder;
 
-class MileageFilter implements FilterContract
+class MileageFilter extends FilterContract
 {
-    protected Builder $query;
-
-    public function __construct(Builder $query)
-    {
-        $this->query = $query;
-    }
-
-    public function handle(string $value): void
+    public function handle(string|array $value): void
     {
         $this->query->where('mileage', '<=', $value);
     }

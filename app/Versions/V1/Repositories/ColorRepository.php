@@ -2,13 +2,13 @@
 
 namespace App\Versions\V1\Repositories;
 
-use App\Models\Brand;
+use App\Models\Color;
 use App\Traits\HasFilterFormFill;
 use App\Versions\V1\Contracts\RepositoryContract;
 
-class BrandRepository extends RepositoryContract
+class ColorRepository extends RepositoryContract
 {
     use HasFilterFormFill;
 
-    public const MODEL = Brand::class;
+    public const MODEL = Color::class;
 }

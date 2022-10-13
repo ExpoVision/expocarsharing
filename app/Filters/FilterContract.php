@@ -2,7 +2,16 @@
 
 namespace App\Filters;
 
-interface FilterContract
+use Illuminate\Database\Eloquent\Builder;
+
+abstract class FilterContract
 {
-    public function handle(string $value): void;
+    protected Builder $query;
+
+    public function __construct(Builder $query)
+    {
+        $this->query = $query;
+    }
+
+    public abstract function handle(string|array $value): void;
 }
