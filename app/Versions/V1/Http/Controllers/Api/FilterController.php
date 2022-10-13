@@ -18,13 +18,19 @@ class FilterController extends Controller
     ) {
     }
 
+    /**
+     * the key names from the returned array correspond 
+     * to the filter names from App\Filters\Offer\
+     * 
+     * @return array
+     */
     public function getFilterValues(): array
     {
         $brands = $this->brandRepository->getAllToFilter();
         $colors = $this->colorRepository->getAllToFilter();
-        $models = $this->brandModelRepository->getAllToFilter();
+        $brandModels = $this->brandModelRepository->getAllToFilter();
         $classes = $this->vehicleClassRepository->getAllToFilter();
 
-        return compact('brands', 'colors', 'models', 'classes');
+        return compact('brandModels', 'brands', 'classes', 'colors');
     }
 }
