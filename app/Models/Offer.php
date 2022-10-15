@@ -10,6 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property float $per_minute
+ * @property string $status
+ * @property-read int $vehicle_id
+ * @property-read \App\Models\Vehicle $vehicle
+ * @property-read \App\Models\Order $order
+ * @property-read \Carbon\Carbon|null $created_at
+ * @property-read \Carbon\Carbon|null $updated_at
+ * @property-read \Carbon\Carbon|null $deleted_at
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Offer extends Model
 {
     use HasFactory;
@@ -28,6 +40,12 @@ class Offer extends Model
     ];
 
     protected $fillable = ['per_minute'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
 
     public function vehicle(): BelongsTo
     {

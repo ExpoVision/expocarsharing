@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property-read \Carbon\Carbon|null $created_at
+ * @property-read \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|App\Models\Vehicle[] $vehicles
+ * @property-read \Illuminate\Database\Eloquent\Collection|App\Models\VehicleInfo[] $vehicleInfos
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class BodyType extends Model
 {
     use HasFactory;
@@ -15,7 +24,12 @@ class BodyType extends Model
 
     protected $fillable = ['name'];
 
-    public function vahicleInfos(): HasMany
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    public function vehicleInfos(): HasMany
     {
         return $this->hasMany(VehicleInfo::class);
     }

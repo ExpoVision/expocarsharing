@@ -7,8 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Traits\HasFilter;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property int $brand_id
+ * @property int $brand_model_id
+ * @property int $color_id
+ * @property int $vehicle_info_id
+ * @property float $mileage
+ * @property int $year
+ * @property \App\Models\Brand $brand
+ * @property \App\Models\Color $color
+ * @property \App\Models\BrandModel $brandModel
+ * @property \App\Models\VehicleInfo $info
+ * @property \App\Models\Offer $offer
+ * @property \App\Models\VehicleClass $class
+ * @property-read \Carbon\Carbon|null $created_at
+ * @property-read \Carbon\Carbon|null $updated_at
+ * @property-read \Carbon\Carbon|null $deleted_at
+ */
 class Vehicle extends Model
 {
     use HasFactory;
@@ -26,10 +45,11 @@ class Vehicle extends Model
         'year',
     ];
 
-    public function bodyType(): BelongsTo
-    {
-        return $this->belongsTo(BodyType::class);
-    }
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
 
     public function brand(): BelongsTo
     {
