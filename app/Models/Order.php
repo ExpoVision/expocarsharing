@@ -3,12 +3,30 @@
 namespace App\Models;
 
 use App\Traits\HasVehicle;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+ * @property string $status
+ * @property-read int $offer_id
+ * @property-read int $user_id
+ * @property-read \App\Models\User $user
+ * @property-read \App\Models\Offer $offer
+ * @property-read \App\Models\Vehicle $vehicle
+ * @property-read \Carbon\Carbon $started_at
+ * @property-read \Carbon\CarbonInterval $active_in
+ * @property-read \Carbon\Carbon|null $finished_at
+ * @property-read \Carbon\Carbon|null $created_at
+ * @property-read \Carbon\Carbon|null $updated_at
+ * @property-read \Carbon\Carbon|null $deleted_at
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class Order extends Model
 {
     /**
@@ -43,7 +61,21 @@ class Order extends Model
     protected $casts = [
         'started_at' => 'datetime',
         'finished_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'active_in',
+    ];
+
+    public function getActiveInAttribute(): CarbonInterval
+    {
+        $started_at = Carbon::parse($this->started_at);
+
+        return $started_at->diffAsCarbonInterval(Carbon::now());
+    }
 
     public function user(): BelongsTo
     {
