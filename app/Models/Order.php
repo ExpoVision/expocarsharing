@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasVehicle;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,6 +46,17 @@ class Order extends Model
         'started_at' => 'datetime',
         'finished_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'active_in',
+    ];
+
+    public function getActiveInAttribute(): CarbonInterval
+    {
+        $started_at = Carbon::parse($this->started_at);
+
+        return $started_at->diffAsCarbonInterval(Carbon::now());
+    }
 
     public function user(): BelongsTo
     {

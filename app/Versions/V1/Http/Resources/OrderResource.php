@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Http\Resources;
 
+use App\Models\Order;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -14,6 +15,17 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $vehicle = $this->vehicle;
+        $user = $this->user;
+        $offer = $this->offer;
+
+        return [
+            // 'address' => ...,
+            'vehicle' => new VehicleResource($vehicle),
+            'user' => new UserResource($user),
+            'offer' => new OfferResource($offer),
+            'status' => Order::$statuses[$this->status],
+            'active_in' => $this->active_in,
+        ];
     }
 }
