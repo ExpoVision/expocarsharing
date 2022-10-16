@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Versions\V1\Http\Resources;
+namespace App\Versions\V1\Http\Resources\Order;
 
 use App\Models\Order;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Versions\V1\Http\Resources\VehicleResource;
+use App\Versions\V1\Http\Resources\UserResource;
+use App\Versions\V1\Http\Resources\OfferResource;
 
 class OrderResource extends JsonResource
 {
@@ -20,12 +23,10 @@ class OrderResource extends JsonResource
         $offer = $this->offer;
 
         return [
-            // 'address' => ...,
             'vehicle' => new VehicleResource($vehicle),
             'user' => new UserResource($user),
             'offer' => new OfferResource($offer),
-            'status' => Order::$statuses[$this->status],
-            'active_in' => $this->active_in,
+            'status' => $this->status,
         ];
     }
 }
