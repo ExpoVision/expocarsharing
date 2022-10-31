@@ -29,11 +29,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Order extends Model
 {
-    /**
-     * 3 бургера с 1ой куриной котлетой
-     * 2 стрипсы в стаканчике + 2 сырных соуса
-     * картошка фри в тарелке + 2 сырных соуса 1 томатный
-     */
     use HasFactory;
     use HasVehicle;
     use SoftDeletes;
@@ -52,6 +47,8 @@ class Order extends Model
         self::STATUS_BROKEN     => 'сломано',
         self::STATUS_ERROR      => '¯\_(ツ)_/¯',
     ];
+
+    protected $perPage = 18;
 
     protected $fillable = [
         'status',
