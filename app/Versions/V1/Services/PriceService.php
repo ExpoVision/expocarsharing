@@ -2,11 +2,12 @@
 
 namespace App\Versions\V1\Services;
 
-use App\Models\Order;
+use App\Versions\V1\DTO\OfferDto;
+use App\Versions\V1\DTO\OrderDto;
 
 class PriceService
 {
-    public function orderActivePrice(Order $order): float
+    public function orderActivePrice(OrderDto $order): float
     {
         $totalHours = $order->active_in->totalHours;
         $per_minute = $order->offer->per_minute;
@@ -14,10 +15,10 @@ class PriceService
         return $this->calculate($totalHours, $per_minute);
     }
 
-    public function orderFinishPrice(Order $order): float
+    public function orderFinishPrice(OrderDto $order, OfferDto $offer): float
     {
-        $totalHours = $order->finished_at->diffAsCarbonInterval(now())->totalHours;
-        $per_minute = $order->offer->per_minute;
+        $totalHours = $order->finished_at->diffAsCarbonInterval($order->started_at)->totalHours;
+        $per_minute = $offer->per_minute;
 
         return $this->calculate($totalHours, $per_minute);
     }

@@ -19,7 +19,7 @@ class OrderReservedResource extends OrderResource
     {
         $user = new UserResource($this->whenLoaded('user'));
         $offer = new OfferResource($this->whenLoaded('offer'));
-        $vehicle = new VehicleResource($this->whenLoaded('vehicle'));
+        $vehicle = new VehicleResource($this->vehicle);
 
         $vehicleName = $vehicle->brand->name . " " . $vehicle->brandModel->name;
         $address = '¯\_(ツ)_/¯';

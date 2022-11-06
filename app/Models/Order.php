@@ -39,6 +39,7 @@ class Order extends Model
     public const STATUS_CONFIRMING_RENT    = 'CONFIRMING_RENT';
     public const STATUS_RENTED             = 'RENTED';
     public const STATUS_CONFIRMING_PAYMENT = 'CONFIRMING_PAYMENT';
+    public const STATUS_FINISH             = 'FINISH';
     public const STATUS_BROKEN             = 'BROKEN';
     public const STATUS_ERROR              = 'ERROR';
 
@@ -47,6 +48,7 @@ class Order extends Model
         self::STATUS_CONFIRMING_RENT    => 'подтверждение аренды',
         self::STATUS_RENTED             => 'в аренде',
         self::STATUS_CONFIRMING_PAYMENT => 'подтверждение оплаты',
+        self::STATUS_FINISH             => 'завершен',
         self::STATUS_BROKEN             => 'сломано',
         self::STATUS_ERROR              => '¯\_(ツ)_/¯',
     ];

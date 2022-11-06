@@ -18,12 +18,6 @@ class OrderConfirmingResource extends OrderResource
         /** @var Order $order */
         $order = $this->resource;
 
-        /** @var PriceService $finishPrice */
-        $finishPrice = app(PriceService::class);
-
-        return [
-            'finished_at' => $order->finished_at->diffForHumans($this->started_at),
-            'price' => $finishPrice->orderFinishPrice($this->resource),
-        ];
+        return [...$order->toArray()];
     }
 }

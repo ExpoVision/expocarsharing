@@ -9,7 +9,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class OfferDto extends DataTransferObject
 {
-    public int $offer_id;
+    public int $vehicle_id;
     public float $per_minute;
     public string $status;
 

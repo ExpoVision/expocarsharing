@@ -16,14 +16,11 @@ class OrderRentedResource extends OrderResource
     {
         $offer = $this->offer;
 
-        /** @var PriceService $activePrice */
-        $activePrice = app(PriceService::class);
-
         return [
             'status' => $this->status,
-            'price' => $activePrice->orderActivePrice($this->resource),
             'time' => $this->active_in->forHumans(),
             'per_minute' => $offer->per_minute,
+            'active_in' => $this->active_in,
         ];
     }
 }

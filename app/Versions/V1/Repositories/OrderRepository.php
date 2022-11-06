@@ -8,6 +8,7 @@ use App\Versions\V1\Contracts\RepositoryContract;
 use App\Versions\V1\DTO\OrderDto;
 // use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends RepositoryContract
 {
@@ -22,6 +23,11 @@ class OrderRepository extends RepositoryContract
         //     'offer',
         //     'vehicle',
         // ]);
+    }
+
+    public function getOrder(): Order
+    {
+        return $this->order;
     }
 
     /**
@@ -65,7 +71,10 @@ class OrderRepository extends RepositoryContract
 
     public function finishRent(): static
     {
-        $this->order->finished_at = now();
+        DB::transaction(function () {
+            $this->order->finished_at = now();
+            $this->updateStatus(Order::STATUS_FINISH);
+        });
 
         return $this;
     }

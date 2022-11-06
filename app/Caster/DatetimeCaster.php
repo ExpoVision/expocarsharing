@@ -7,7 +7,7 @@ use Spatie\DataTransferObject\Caster;
 
 class DatetimeCaster implements Caster
 {
-    public function cast(mixed $value): Carbon
+    public function cast(mixed $value): ?Carbon
     {
         return Carbon::make($value);
     }
