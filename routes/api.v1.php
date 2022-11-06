@@ -22,7 +22,12 @@ auth()->loginUsingId(1);
 
 Route::resource('order', OrderController::class)->only(['show']);
 Route::group(['prefix' => 'order-process'], function () {
-    Route::post('reserv/{offer}',   [OrderController::class, 'reserv'])->name('order.reserv');
+    Route::post('reserv/{offer}', [OrderController::class, 'reserv'])->name('order.reserv');
+    Route::post('confirmRent/{order}', [OrderController::class, 'confirmRent'])->name('order.confirmRent');
+    Route::post('confirmPayment/{order}', [OrderController::class, 'confirmPayment'])->name('order.confirmPayment');
+    Route::post('rent/{order}', [OrderController::class, 'rent'])->name('order.rent');
+    Route::post('finish/{order}', [OrderController::class, 'finish'])->name('order.finish');
+
     Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
     Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
     Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
