@@ -1,6 +1,5 @@
 <?php
 
-use App\Versions\V1\Http\Controllers\Api\Admin\RentController;
 use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
@@ -19,11 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+auth()->loginUsingId(1);
+
 Route::resource('order', OrderController::class)->only(['show']);
 Route::group(['prefix' => 'order-process'], function () {
-    Route::get('reserved',   [RentController::class, 'reserved'])->name('order.reserved');
-    Route::get('rented',     [RentController::class, 'rented'])->name('order.rented');
-    Route::get('confirming', [RentController::class, 'confirming'])->name('order.confirming');
+    Route::post('reserv/{offer}',   [OrderController::class, 'reserv'])->name('order.reserv');
+    Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
+    Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
+    Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
 });
 
 Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
