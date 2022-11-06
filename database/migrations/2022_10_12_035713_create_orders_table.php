@@ -17,7 +17,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('offer_id')->unique();
+            $table->foreignId('offer_id')->unique()
+                ->constrained()
+                ->cascadeOnUpdate();
             $table->foreignId('user_id')->unique()
                 ->constrained()
                 ->onUpdate('cascade')
