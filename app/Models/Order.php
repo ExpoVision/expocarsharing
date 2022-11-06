@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\WithUserOfferVehicleScope;
 use App\Traits\HasVehicle;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -66,6 +67,11 @@ class Order extends Model
     protected $appends = [
         'active_in',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new WithUserOfferVehicleScope);
+    }
 
     public function getActiveInAttribute(): CarbonInterval
     {

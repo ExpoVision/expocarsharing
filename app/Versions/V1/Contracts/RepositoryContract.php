@@ -11,8 +11,8 @@ abstract class RepositoryContract
     ) {
         /**
          * like `public const MODEL` in successor class
-         * 
-         * @var string $modelClass 
+         *
+         * @var string $modelClass
         */
         $modelClass = static::MODEL;
 

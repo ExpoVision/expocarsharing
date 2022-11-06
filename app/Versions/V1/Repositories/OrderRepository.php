@@ -5,23 +5,28 @@ namespace App\Versions\V1\Repositories;
 use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
+use App\Versions\V1\DTO\OrderDto;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderRepository extends RepositoryContract
 {
-    public const MODEL = Order::class;
+    // public const MODEL = Order::class;
 
     public function __construct(
-        public Builder $builder
+        public Order $order,
+        // public Builder $builder
     ) {
-        $this->builder = app(self::MODEL)->with([
-            'user',
-            'offer',
-            'vehicle',
-        ]);
+        // $this->builder = app(self::MODEL)->with([
+        //     'user',
+        //     'offer',
+        //     'vehicle',
+        // ]);
     }
 
+    /**
+     * @todo refactor
+     */
     public function getOrderByUser(User $user): Order
     {
         return $user->order;
@@ -29,11 +34,25 @@ class OrderRepository extends RepositoryContract
 
     public function getByStatus(string $status, ?int $perPage = null): LengthAwarePaginator
     {
-        return $this->builder->where('status', $status)->paginate($perPage);
+        return $this->order->newQuery()->where('status', $status)->paginate($perPage);
     }
 
     public function getById(int $id): Order
     {
-        return $this->builder->findOrFail($id);
+        return $this->order->newQuery()->findOrFail($id);
+    }
+
+    public function fill(OrderDto $dto): static
+    {
+        $this->order->fill($dto->toArray());
+
+        return $this;
+    }
+
+    public function save(): static
+    {
+        $this->order->save();
+
+        return $this;
     }
 }
