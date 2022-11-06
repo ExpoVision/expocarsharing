@@ -6,7 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
 use App\Versions\V1\DTO\OrderDto;
-use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrderRepository extends RepositoryContract
@@ -49,9 +49,37 @@ class OrderRepository extends RepositoryContract
         return $this;
     }
 
+    public function updateStatus(string $status): static
+    {
+        $this->order->setAttribute('status', $status);
+
+        return $this;
+    }
+
+    public function startRent(): static
+    {
+        $this->order->started_at = now();
+
+        return $this;
+    }
+
+    public function finishRent(): static
+    {
+        $this->order->finished_at = now();
+
+        return $this;
+    }
+
     public function save(): static
     {
         $this->order->save();
+
+        return $this;
+    }
+
+    public function delete(): static
+    {
+        $this->order->delete();
 
         return $this;
     }

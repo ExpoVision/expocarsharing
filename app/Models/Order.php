@@ -35,18 +35,20 @@ class Order extends Model
     use SoftDeletes;
 
     // FIXME: Refactor to enums
-    public const STATUS_RESERVED   = 'RESERVED';
-    public const STATUS_RENTED     = 'RENTED';
-    public const STATUS_CONFIRMING = 'CONFIRMING';
-    public const STATUS_BROKEN     = 'BROKEN';
-    public const STATUS_ERROR      = 'ERROR';
+    public const STATUS_RESERVED           = 'RESERVED';
+    public const STATUS_CONFIRMING_RENT    = 'CONFIRMING_RENT';
+    public const STATUS_RENTED             = 'RENTED';
+    public const STATUS_CONFIRMING_PAYMENT = 'CONFIRMING_PAYMENT';
+    public const STATUS_BROKEN             = 'BROKEN';
+    public const STATUS_ERROR              = 'ERROR';
 
     public static array $statuses = [
-        self::STATUS_RESERVED   => 'ожидание доставки',
-        self::STATUS_RENTED     => 'в аренде',
-        self::STATUS_CONFIRMING => 'подтверждение оплаты',
-        self::STATUS_BROKEN     => 'сломано',
-        self::STATUS_ERROR      => '¯\_(ツ)_/¯',
+        self::STATUS_RESERVED           => 'ожидание доставки',
+        self::STATUS_CONFIRMING_RENT    => 'подтверждение аренды',
+        self::STATUS_RENTED             => 'в аренде',
+        self::STATUS_CONFIRMING_PAYMENT => 'подтверждение оплаты',
+        self::STATUS_BROKEN             => 'сломано',
+        self::STATUS_ERROR              => '¯\_(ツ)_/¯',
     ];
 
     protected $perPage = 18;

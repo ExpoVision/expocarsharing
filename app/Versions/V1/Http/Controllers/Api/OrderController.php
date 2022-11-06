@@ -43,6 +43,48 @@ class OrderController extends Controller
         return response($order);
     }
 
+    public function confirmRent(Request $request, Order $order): void
+    {
+        /** @var OrderRepository $order */
+        $order = app(OrderRepository::class, ['order' => $order]);
+
+        $order->updateStatus(Order::STATUS_CONFIRMING_RENT)->save();
+    }
+
+    public function confirmPayment(Request $request, Order $order): void
+    {
+        /** @var OrderRepository $order */
+        $order = app(OrderRepository::class, ['order' => $order]);
+
+        $order->updateStatus(Order::STATUS_CONFIRMING_PAYMENT)->save();
+    }
+
+    public function rent(Request $request, Order $order): void
+    {
+        /** @var OrderRepository $order */
+        $order = app(OrderRepository::class, ['order' => $order]);
+
+        DB::transaction(function () use ($order) {
+            $order->startRent();
+            $order->updateStatus(Order::STATUS_RENTED)->save();
+        });
+    }
+
+    public function finish(Request $request, Order $order): void
+    {
+        /** @var OrderRepository $order */
+        $order = app(OrderRepository::class, ['order' => $order]);
+        /** @var OfferRepository $offer */
+        $offer = app(OfferRepository::class, ['offer' => $order->offer]);
+
+        DB::transaction(function () use ($order, $offer) {
+            $order->finishRent();
+            $order->delete();
+
+            $offer->makeAvailable();
+        });
+    }
+
     public function reserved(Request $request): OrderReservedCollection
     {
         $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_RESERVED);
@@ -52,7 +94,7 @@ class OrderController extends Controller
 
     public function confirming(Request $request): OrderConfirmingCollection
     {
-        $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_CONFIRMING);
+        $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_CONFIRMING_RENT);
 
         return new OrderConfirmingCollection($orders);
     }
