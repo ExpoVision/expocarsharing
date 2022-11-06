@@ -17,10 +17,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('offer_id')->unique()
+            $table->foreignId('offer_id')
                 ->constrained()
                 ->cascadeOnUpdate();
-            $table->foreignId('user_id')->unique()
+            $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
