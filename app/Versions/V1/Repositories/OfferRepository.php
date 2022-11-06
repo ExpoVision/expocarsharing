@@ -42,6 +42,7 @@ class OfferRepository extends RepositoryContract
     public function makeUnavailable(): static
     {
         $this->offer->setAttribute('status', Offer::STATUS_UNAVAILABLE);
+        $this->save();
 
         return $this;
     }
@@ -49,6 +50,7 @@ class OfferRepository extends RepositoryContract
     public function makeAvailable(): static
     {
         $this->offer->setAttribute('status', Offer::STATUS_AVAILABLE);
+        $this->save();
 
         return $this;
     }

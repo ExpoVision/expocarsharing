@@ -52,6 +52,8 @@ class Order extends Model
     protected $perPage = 18;
 
     protected $fillable = [
+        'offer_id',
+        'user_id',
         'status',
         'finised_at',
     ];

@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\DTO;
 
+use App\Models\Offer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Spatie\DataTransferObject\DataTransferObject;
@@ -18,7 +19,7 @@ class OfferDto extends DataTransferObject
     public static function fromRequest(Request $request): static
     {
         return new self($request->all() + [
-            'status' => Order::STATUS_RESERVED
+            'status' => Offer::STATUS_AVAILABLE,
         ]);
     }
 }

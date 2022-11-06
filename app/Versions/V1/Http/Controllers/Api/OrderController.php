@@ -10,8 +10,11 @@ use App\Versions\V1\Http\Resources\Collections\Order\OrderConfirmingCollection;
 use App\Versions\V1\Http\Resources\Collections\Order\OrderRentedCollection;
 use App\Versions\V1\Http\Resources\Collections\Order\OrderReservedCollection;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
+use App\Versions\V1\Repositories\OfferRepository;
+use App\Versions\V1\Repositories\OrderRepository;
 use App\Versions\V1\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -25,28 +28,38 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function reserv(Request $request)
+    public function reserv(Request $request, Offer $offer)
     {
-        $order = $this->service->store(OrderDto::fromRequest($request));
+        /** @var OfferRepository $offer */
+        $offer = app(OfferRepository::class, ['offer' => $offer]);
+        $order = [];
+
+        DB::transaction(function () use ($request, $offer, &$order) {
+            $offer->makeUnavailable();
+
+            $order = $this->service->store(OrderDto::fromRequest($request));
+        });
+
+        return response($order);
     }
 
     public function reserved(Request $request): OrderReservedCollection
     {
-        $orders = $this->orderRepository->getByStatus(Order::STATUS_RESERVED);
+        $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_RESERVED);
 
         return new OrderReservedCollection($orders);
     }
 
     public function confirming(Request $request): OrderConfirmingCollection
     {
-        $orders = $this->orderRepository->getByStatus(Order::STATUS_CONFIRMING);
+        $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_CONFIRMING);
 
         return new OrderConfirmingCollection($orders);
     }
 
     public function rented(Request $request): OrderRentedCollection
     {
-        $orders = $this->orderRepository->getByStatus(Order::STATUS_RENTED);
+        $orders = app(OrderRepository::class)->getByStatus(Order::STATUS_RENTED);
 
         return new OrderRentedCollection($orders);
     }
