@@ -88,12 +88,12 @@ class OrderController extends Controller
         /** @var OfferRepository $offer */
         $offer = app(OfferRepository::class, ['offer' => $offer]);
 
-        // DB::transaction(function () use ($order, $offer) {
-        //     $order->finishRent()->save();
-        //     $order->delete();
+        DB::transaction(function () use ($order, $offer) {
+            $order->finishRent()->save();
+            $order->delete();
 
-        //     $offer->makeAvailable();
-        // });
+            $offer->makeAvailable();
+        });
 
         return new OrderFinishResource($order->getOrder());
     }
