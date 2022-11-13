@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\WithVehicleScope;
 use App\Traits\HasFilter;
 use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @property-read \Carbon\Carbon|null $deleted_at
+ * @method \Illuminate\Database\Eloquent\Builder filterBy(array $filters)
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Offer extends Model
@@ -46,6 +48,11 @@ class Offer extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new WithVehicleScope);
+    }
 
     public function vehicle(): BelongsTo
     {

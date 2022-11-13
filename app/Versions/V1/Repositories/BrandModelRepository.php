@@ -11,5 +11,13 @@ class BrandModelRepository extends RepositoryContract
 {
     use HasFilterFormFill;
 
-    public const MODEL = BrandModel::class;
+    public function __construct(
+        private BrandModel $brandModel
+    ) {
+    }
+
+    public function getQuery(): Builder
+    {
+        return $this->brandModel->newQuery();
+    }
 }

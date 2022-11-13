@@ -14,7 +14,8 @@ class OrderResourceFactory
             case Order::STATUS_BROKEN:
                 $orderResourceClass = OrderBrokenResource::class;
                 break;
-            case Order::STATUS_CONFIRMING:
+            case Order::STATUS_CONFIRMING_PAYMENT:
+            case Order::STATUS_CONFIRMING_RENT:
                 $orderResourceClass = OrderConfirmingResource::class;
                 break;
             case Order::STATUS_ERROR:

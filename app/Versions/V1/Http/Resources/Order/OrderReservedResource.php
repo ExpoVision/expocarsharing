@@ -3,9 +3,9 @@
 namespace App\Versions\V1\Http\Resources\Order;
 
 use App\Models\Order;
-use App\Versions\V1\Http\Resources\VehicleResource;
-use App\Versions\V1\Http\Resources\UserResource;
 use App\Versions\V1\Http\Resources\OfferResource;
+use App\Versions\V1\Http\Resources\UserResource;
+use App\Versions\V1\Http\Resources\VehicleResource;
 
 class OrderReservedResource extends OrderResource
 {
@@ -17,7 +17,9 @@ class OrderReservedResource extends OrderResource
      */
     public function toArray($request)
     {
-        $vehicle = $this->vehicle;
+        $user = new UserResource($this->whenLoaded('user'));
+        $offer = new OfferResource($this->whenLoaded('offer'));
+        $vehicle = new VehicleResource($this->vehicle);
 
         $vehicleName = $vehicle->brand->name . " " . $vehicle->brandModel->name;
         $address = '¯\_(ツ)_/¯';
@@ -26,6 +28,7 @@ class OrderReservedResource extends OrderResource
         return [
             'status' => Order::$statuses[$this->status],
             ...compact('vehicleName', 'address', 'courier'),
+            ...compact('user', 'offer', 'vehicle'),
         ];
     }
 }

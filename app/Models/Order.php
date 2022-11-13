@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\WithUserOfferVehicleScope;
 use App\Traits\HasVehicle;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -29,31 +30,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Order extends Model
 {
-    /**
-     * 3 бургера с 1ой куриной котлетой
-     * 2 стрипсы в стаканчике + 2 сырных соуса
-     * картошка фри в тарелке + 2 сырных соуса 1 томатный
-     */
     use HasFactory;
     use HasVehicle;
     use SoftDeletes;
 
     // FIXME: Refactor to enums
-    public const STATUS_RESERVED   = 'RESERVED';
-    public const STATUS_RENTED     = 'RENTED';
-    public const STATUS_CONFIRMING = 'CONFIRMING';
-    public const STATUS_BROKEN     = 'BROKEN';
-    public const STATUS_ERROR      = 'ERROR';
+    public const STATUS_RESERVED           = 'RESERVED';
+    public const STATUS_CONFIRMING_RENT    = 'CONFIRMING_RENT';
+    public const STATUS_RENTED             = 'RENTED';
+    public const STATUS_CONFIRMING_PAYMENT = 'CONFIRMING_PAYMENT';
+    public const STATUS_FINISH             = 'FINISH';
+    public const STATUS_BROKEN             = 'BROKEN';
+    public const STATUS_ERROR              = 'ERROR';
 
     public static array $statuses = [
-        self::STATUS_RESERVED   => 'ожидание доставки',
-        self::STATUS_RENTED     => 'в аренде',
-        self::STATUS_CONFIRMING => 'подтверждение оплаты',
-        self::STATUS_BROKEN     => 'сломано',
-        self::STATUS_ERROR      => '¯\_(ツ)_/¯',
+        self::STATUS_RESERVED           => 'ожидание доставки',
+        self::STATUS_CONFIRMING_RENT    => 'подтверждение аренды',
+        self::STATUS_RENTED             => 'в аренде',
+        self::STATUS_CONFIRMING_PAYMENT => 'подтверждение оплаты',
+        self::STATUS_FINISH             => 'завершен',
+        self::STATUS_BROKEN             => 'сломано',
+        self::STATUS_ERROR              => '¯\_(ツ)_/¯',
     ];
 
+    protected $perPage = 18;
+
     protected $fillable = [
+        'offer_id',
+        'user_id',
         'status',
         'finised_at',
     ];
@@ -69,6 +73,11 @@ class Order extends Model
     protected $appends = [
         'active_in',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new WithUserOfferVehicleScope);
+    }
 
     public function getActiveInAttribute(): CarbonInterval
     {
