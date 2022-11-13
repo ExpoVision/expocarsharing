@@ -1,5 +1,7 @@
 <?php
 
+use App\Versions\V1\Http\Controllers\Api\Auth\AuthController;
+use App\Versions\V1\Http\Controllers\Api\Auth\RegisterController;
 use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
@@ -18,27 +20,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-auth()->loginUsingId(1);
+Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
+Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
+ROute::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-Route::resource('order', OrderController::class)->only(['show']);
-Route::group(['prefix' => 'order-process'], function () {
-    Route::post('reserv/{offer}', [OrderController::class, 'reserv'])->name('order.reserv');
-    Route::post('confirmRent/{order}', [OrderController::class, 'confirmRent'])->name('order.confirmRent');
-    Route::post('confirmPayment/{order}', [OrderController::class, 'confirmPayment'])->name('order.confirmPayment');
-    Route::post('rent/{order}', [OrderController::class, 'rent'])->name('order.rent');
-    Route::post('finish/{order}', [OrderController::class, 'finish'])->name('order.finish');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('order', OrderController::class)->only(['show']);
+    Route::group(['prefix' => 'order-process'], function () {
+        Route::post('reserv/{offer}', [OrderController::class, 'reserv'])->name('order.reserv');
+        Route::post('confirmRent/{order}', [OrderController::class, 'confirmRent'])->name('order.confirmRent');
+        Route::post('confirmPayment/{order}', [OrderController::class, 'confirmPayment'])->name('order.confirmPayment');
+        Route::post('rent/{order}', [OrderController::class, 'rent'])->name('order.rent');
+        Route::post('finish/{order}', [OrderController::class, 'finish'])->name('order.finish');
 
-    Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
-    Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
-    Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
-});
+        Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
+        Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
+        Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
+    });
 
-Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
+    Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
 
-Route::apiResource('/vehicle', VehicleController::class);
+    Route::apiResource('/vehicle', VehicleController::class);
 
-Route::apiResource('offer', OfferController::class);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::apiResource('offer', OfferController::class);
 });
