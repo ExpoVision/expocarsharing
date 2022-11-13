@@ -6,23 +6,21 @@ use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
 use App\Versions\V1\DTO\OrderDto;
+use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends RepositoryContract
 {
-    // public const MODEL = Order::class;
-
     public function __construct(
         public Order $order,
-        // public Builder $builder
     ) {
-        // $this->builder = app(self::MODEL)->with([
-        //     'user',
-        //     'offer',
-        //     'vehicle',
-        // ]);
+    }
+
+    public function getQuery(): Builder
+    {
+        return $this->order->newQuery();
     }
 
     public function getOrder(): Order
@@ -40,12 +38,12 @@ class OrderRepository extends RepositoryContract
 
     public function getByStatus(string $status, ?int $perPage = null): LengthAwarePaginator
     {
-        return $this->order->newQuery()->where('status', $status)->paginate($perPage);
+        return $this->getQuery()->where('status', $status)->paginate($perPage);
     }
 
     public function getById(int $id): Order
     {
-        return $this->order->newQuery()->findOrFail($id);
+        return $this->getQuery()->findOrFail($id);
     }
 
     public function fill(OrderDto $dto): static

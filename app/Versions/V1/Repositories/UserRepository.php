@@ -4,6 +4,7 @@ namespace App\Versions\V1\Repositories;
 
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Sanctum\NewAccessToken;
 
 class UserRepository extends RepositoryContract
@@ -11,6 +12,11 @@ class UserRepository extends RepositoryContract
     public function __construct(
         private User $user
     ) {
+    }
+
+    public function getQuery(): Builder
+    {
+        return $this->user->newQuery();
     }
 
     public function getUser(): User

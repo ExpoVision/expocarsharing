@@ -11,25 +11,33 @@ use Illuminate\Database\Eloquent\Collection;
 class VehicleRepository extends RepositoryContract
 {
     public function __construct(
-        public Builder $builder,
-        public VehicleClassRepository $classRepository,
+        private Vehicle $vehicle
     ) {
-        $this->builder = app(Vehicle::class)->with(['brand', 'brandModel', 'color', 'class']);
+    }
+
+    public function getQuery(): Builder
+    {
+        return $this->vehicle->newQuery();
+    }
+
+    public function getQueryWithInfo(): Builder
+    {
+        return $this->getQuery()->with(['brand', 'brandModel', 'color', 'class']);
     }
 
     /**
      * @param int|null $perPage
-     * 
+     *
      * @return LengthAwarePaginator
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->builder->paginate($perPage);
+        return $this->getQuery()->paginate($perPage);
     }
 
     public function getById(int $id): Vehicle
     {
-        return $this->builder->findOrFail($id);
+        return $this->getQueryWithInfo()->findOrFail($id);
     }
 
     public function groupedByClass(?int $perGroup = null): Collection

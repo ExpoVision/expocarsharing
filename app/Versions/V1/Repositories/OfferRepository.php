@@ -10,13 +10,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class OfferRepository extends RepositoryContract
 {
-    // public const MODEL = Offer::class;
-
     public function __construct(
         private Offer $offer,
-        // public Builder $builder
     ) {
-        // $this->builder = app(self::MODEL)->with(['vehicle']);
+    }
+
+    public function getQuery(): Builder
+    {
+        return $this->offer->newQuery();
     }
 
     public function getOffer(): Offer
@@ -26,17 +27,17 @@ class OfferRepository extends RepositoryContract
 
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->offer->newQuery()->paginate($perPage);
+        return $this->getQuery()->paginate($perPage);
     }
 
     public function getMinPerMinute(): int|string
     {
-        return $this->offer->newQuery()->min('per_minute');
+        return $this->getQuery()->min('per_minute');
     }
 
     public function getMaxPerMinute(): int|string
     {
-        return $this->offer->newQuery()->max('per_minute');
+        return $this->getQuery()->max('per_minute');
     }
 
     public function makeUnavailable(): static
