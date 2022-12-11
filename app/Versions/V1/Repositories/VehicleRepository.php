@@ -6,12 +6,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Vehicle;
 use App\Versions\V1\Contracts\RepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 class VehicleRepository extends RepositoryContract
 {
     public function __construct(
-        private Vehicle $vehicle
+        private Vehicle $vehicle,
     ) {
     }
 
@@ -20,9 +19,14 @@ class VehicleRepository extends RepositoryContract
         return $this->vehicle->newQuery();
     }
 
-    public function getQueryWithInfo(): Builder
+    public function getQueryWithBaseRelations(): Builder
     {
         return $this->getQuery()->with(['brand', 'brandModel', 'color', 'class']);
+    }
+
+    public function getQueryWithFullInfo(): Builder
+    {
+        return $this->getQueryWithBaseRelations()->with('info');
     }
 
     /**
@@ -32,16 +36,11 @@ class VehicleRepository extends RepositoryContract
      */
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
-        return $this->getQuery()->paginate($perPage);
+        return $this->getQueryWithBaseRelations()->paginate($perPage);
     }
 
-    public function getById(int $id): Vehicle
+    public function find(int $id): Vehicle
     {
-        return $this->getQueryWithInfo()->findOrFail($id);
-    }
-
-    public function groupedByClass(?int $perGroup = null): Collection
-    {
-        return $this->classRepository->certainWithVehicles($perGroup);
+        return $this->getQueryWithFullInfo()->findOrFail($id);
     }
 }

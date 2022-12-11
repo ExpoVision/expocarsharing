@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Http\Resources;
 
+use App\Versions\V1\Http\Resources\Collections\OfferCollection;
 use App\Versions\V1\Http\Resources\Collections\VehicleCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,6 +20,7 @@ class VehicleClassResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'vehicles' => new VehicleCollection($this->whenLoaded('vehicles')),
+            'offers' => new OfferCollection($this->whenLoaded('offers')),
         ];
     }
 }

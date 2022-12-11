@@ -5,6 +5,7 @@ use App\Versions\V1\Http\Controllers\Api\Auth\RegisterController;
 use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
+use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+const USERS_ROUTES = ['show', 'index'];
+const ADMIN_ROUTES = ['edit', 'create', 'update', 'store'];
+
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
-ROute::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+Route::apiResource('/vehicle', VehicleController::class)->only(USERS_ROUTES);
+Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('order', OrderController::class)->only(['show']);
@@ -40,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
 
-    Route::apiResource('/vehicle', VehicleController::class);
+    Route::apiResource('/vehicle', VehicleController::class)->only(ADMIN_ROUTES);
 
     Route::apiResource('offer', OfferController::class);
 });

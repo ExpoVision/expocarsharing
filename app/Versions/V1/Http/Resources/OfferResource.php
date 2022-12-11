@@ -16,7 +16,7 @@ class OfferResource extends JsonResource
     {
         return [
             'vehicle' => new VehicleResource($this->whenLoaded('vehicle')),
-            'per_minute' => $this->per_minute . "/" . __('min'),
+            'per_minute' => $this->per_minute,
         ];
     }
 }

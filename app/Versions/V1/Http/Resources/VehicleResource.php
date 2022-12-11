@@ -19,7 +19,7 @@ class VehicleResource extends JsonResource
     {
         $brand = new BrandResource($this->brand);
         $model = new BrandModelResource($this->brandModel);
-        $color = new ColorResource($this->whenLoaded('color'));
+        $color = new ColorResource($this->color);
         $info  = new VehicleInfoResource($this->whenLoaded('info'));
         $class = new VehicleClassResource($this->whenLoaded('class'));
 
@@ -27,7 +27,6 @@ class VehicleResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'name' => "$brand->name $model->name",
             'mileage' => $this->mileage,
             'year' => $this->year,
             ...$relations,

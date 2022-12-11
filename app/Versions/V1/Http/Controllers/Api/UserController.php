@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Versions\V1\Http\Controllers\Controller;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
 use App\Versions\V1\Http\Resources\Order\OrderResourceFactory;
@@ -19,9 +20,9 @@ class UserController extends Controller
     ) {
     }
 
-    public function show(Request $request, int $user): UserResource
+    public function show(Request $request, User $user): UserResource
     {
-        return new UserResource($this->repository->getById($user));
+        return new UserResource($user);
     }
 
     public function getCurrentUserOrder(Request $request): ?OrderResource
