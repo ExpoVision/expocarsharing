@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             VehicleInfoSeeder::class,
             OfferSeeder::class,
+            FaqSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }

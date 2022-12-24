@@ -2,12 +2,13 @@
 
 use App\Versions\V1\Http\Controllers\Api\Auth\AuthController;
 use App\Versions\V1\Http\Controllers\Api\Auth\RegisterController;
+use App\Versions\V1\Http\Controllers\Api\FaqController;
 use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
+use App\Versions\V1\Http\Controllers\Api\ReviewController;
 use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,10 @@ Route::post('/register', [RegisterController::class, 'register'])->name('auth.re
 Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-Route::apiResource('/vehicle', VehicleController::class)->only(USERS_ROUTES);
+Route::apiResource('vehicle', VehicleController::class)->only(USERS_ROUTES);
 Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
+Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
+Route::apiResource('review', ReviewController::class)->only(USERS_ROUTES);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('order', OrderController::class)->only(['show']);
