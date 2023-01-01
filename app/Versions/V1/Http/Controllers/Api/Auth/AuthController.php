@@ -4,6 +4,7 @@ namespace App\Versions\V1\Http\Controllers\Api\Auth;
 
 use App\Versions\V1\Http\Requests\LoginRequest;
 use App\Versions\V1\Services\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController
@@ -16,11 +17,21 @@ class AuthController
 
             /** @var \App\Versions\V1\Services\UserService $token */
             $token = app(UserService::class, compact('user'));
-            $token = $token->createToken()->plainTextToken;
+            $access_token = $token->createToken()->plainTextToken;
 
-            return response(compact('user', 'token'));
+            return response(compact('user', 'access_token'));
         }
 
-        return response(403);
+        return response('', 403);
+    }
+
+    public function refresh(Request $request)
+    {
+        // refresh token
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
     }
 }

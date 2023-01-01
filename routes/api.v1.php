@@ -3,10 +3,12 @@
 use App\Versions\V1\Http\Controllers\Api\Auth\AuthController;
 use App\Versions\V1\Http\Controllers\Api\Auth\RegisterController;
 use App\Versions\V1\Http\Controllers\Api\FaqController;
+use App\Versions\V1\Http\Controllers\Api\FeedbackController;
 use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
 use App\Versions\V1\Http\Controllers\Api\ReviewController;
+use App\Versions\V1\Http\Controllers\Api\UserController;
 use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -28,13 +30,17 @@ const ADMIN_ROUTES = ['edit', 'create', 'update', 'store'];
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::apiResource('vehicle', VehicleController::class)->only(USERS_ROUTES);
 Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
 Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
 Route::apiResource('review', ReviewController::class)->only(USERS_ROUTES);
 
+Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
+
     Route::resource('order', OrderController::class)->only(['show']);
     Route::group(['prefix' => 'order-process'], function () {
         Route::post('reserv/{offer}', [OrderController::class, 'reserv'])->name('order.reserv');

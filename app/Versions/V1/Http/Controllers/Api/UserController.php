@@ -35,4 +35,9 @@ class UserController extends Controller
 
         return OrderResourceFactory::create($order->status, $order);
     }
+
+    public function fetchProfile(Request $request): UserResource
+    {
+        return new UserResource($request->user());
+    }
 }

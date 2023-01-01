@@ -23,4 +23,18 @@ class FeedbackRepository extends RepositoryContract
     {
         return $this->getQuery()->paginate($perPage);
     }
+
+    public function fill(array $feedback): static
+    {
+        $this->feedback->fill($feedback);
+
+        return $this;
+    }
+
+    public function save(): static
+    {
+        $this->feedback->save();
+
+        return $this;
+    }
 }
