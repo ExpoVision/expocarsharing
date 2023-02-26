@@ -26,4 +26,11 @@ class FeedbackService
 
         return $this->feedback;
     }
+
+    public function delete(): static
+    {
+        $this->repository->delete();
+
+        return $this;
+    }
 }

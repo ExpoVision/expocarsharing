@@ -19,6 +19,11 @@ class FeedbackRepository extends RepositoryContract
         return $this->feedback->newQuery();
     }
 
+    public function onlyTrashed(?int $perPage = null): LengthAwarePaginator
+    {
+        return $this->feedback->onlyTrashed()->paginate($perPage);
+    }
+
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
         return $this->getQuery()->paginate($perPage);
@@ -34,6 +39,13 @@ class FeedbackRepository extends RepositoryContract
     public function save(): static
     {
         $this->feedback->save();
+
+        return $this;
+    }
+
+    public function delete(): static
+    {
+        $this->feedback->delete();
 
         return $this;
     }
