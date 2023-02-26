@@ -37,7 +37,7 @@ Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_R
 Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
 Route::apiResource('review', ReviewController::class)->only(USERS_ROUTES);
 
-Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
+Route::apiResource('feedback', FeedbackController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
 
