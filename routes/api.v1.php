@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 const USERS_ROUTES = ['show', 'index'];
-const ADMIN_ROUTES = ['edit', 'create', 'update', 'store'];
+const ADMIN_ROUTES = ['edit', 'create', 'update', 'store', 'destroy'];
 
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
@@ -38,7 +38,7 @@ Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
 Route::apiResource('review', ReviewController::class)->only(USERS_ROUTES);
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
-Route::apiResource('feedback', FeedbackController::class);
+Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
 
@@ -58,6 +58,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
 
     Route::apiResource('/vehicle', VehicleController::class)->only(ADMIN_ROUTES);
-
+    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
     Route::apiResource('offer', OfferController::class);
 });
