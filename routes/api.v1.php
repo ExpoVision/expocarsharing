@@ -35,7 +35,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::apiResource('vehicle', VehicleController::class)->only(USERS_ROUTES);
 Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
 Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
-Route::apiResource('review', ReviewController::class)->only(USERS_ROUTES);
+Route::apiResource('review', ReviewController::class)->only(['store', ...USERS_ROUTES]);
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
 Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
