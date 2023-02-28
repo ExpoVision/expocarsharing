@@ -14,8 +14,22 @@ class UserDto extends UserDtoAbstract
      */
     public static function fromRequest($request)
     {
-        return new self($request->validated() + [
+        return new self($request->all() + [
             'role' => User::ROLE_USER
         ]);
+    }
+
+    public function toUpdateArray(): array
+    {
+        $fields = $this->toArray();
+        $withoutEmptyFields = [];
+
+        foreach ($fields as $key => $val) {
+            if ($val) {
+                $withoutEmptyFields[$key] = $val;
+            }
+        }
+
+        return $withoutEmptyFields;
     }
 }

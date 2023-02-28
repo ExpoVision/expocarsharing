@@ -32,6 +32,15 @@ class UserService
         return $this;
     }
 
+    public function update(UserDto $data): static
+    {
+        $this->repository
+            ->fill($data->toUpdateArray())
+            ->save();
+
+        return $this;
+    }
+
     public function storeAdmin(AdminDto $data): static
     {
         $this->repository

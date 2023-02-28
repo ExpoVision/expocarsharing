@@ -3,21 +3,34 @@
 namespace App\Versions\V1\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Versions\V1\DTO\UserDto;
+use App\Versions\V1\DTO\UserPasswordDto;
 use App\Versions\V1\Http\Controllers\Controller;
+use App\Versions\V1\Http\Requests\UserPasswordUpdateRequest;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
 use App\Versions\V1\Http\Resources\Order\OrderResourceFactory;
 use App\Versions\V1\Http\Resources\UserResource;
 use App\Versions\V1\Repositories\OrderRepository;
-use App\Versions\V1\Repositories\UserRepository;
+use App\Versions\V1\Services\UserService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function __construct(
-        public UserRepository $repository,
+        public UserService $service,
         public OrderRepository $orderRepository,
     ) {
+    }
+
+    public function update(Request $request, User $user): UserResource
+    {
+        /** @var UserService $service */
+        $this->service = app(UserService::class, compact('user'));
+
+        $this->service->update(UserDto::fromRequest($request));
+
+        return new UserResource($this->service->getUser());
     }
 
     public function show(Request $request, User $user): UserResource

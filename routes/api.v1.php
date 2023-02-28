@@ -32,6 +32,7 @@ Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->na
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
+Route::apiResource('offer', OfferController::class)->only(USERS_ROUTES);
 Route::apiResource('vehicle', VehicleController::class)->only(USERS_ROUTES);
 Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
 Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
@@ -41,6 +42,7 @@ Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('
 Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
+    Route::apiResource('user', UserController::class);
 
     Route::resource('order', OrderController::class)->only(['show']);
     Route::group(['prefix' => 'order-process'], function () {
@@ -55,9 +57,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
     });
 
-    Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
-
     Route::apiResource('/vehicle', VehicleController::class)->only(ADMIN_ROUTES);
     Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('offer', OfferController::class);
+    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
 });
+
+Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');

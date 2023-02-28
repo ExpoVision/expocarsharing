@@ -9,11 +9,11 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 abstract class UserDtoAbstract extends DataTransferObject
 {
-    public string $name;
-    public string $email;
+    public ?string $name;
+    public ?string $email;
     #[CastWith(HashMakeCaster::class)]
-    public string $password;
-    public string $role;
+    public ?string $password;
+    public ?string $role;
 
     /**
      * @param Illuminate\Http\Request $request
