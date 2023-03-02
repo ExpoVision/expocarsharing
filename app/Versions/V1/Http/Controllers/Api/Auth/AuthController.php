@@ -17,9 +17,9 @@ class AuthController
 
             /** @var \App\Versions\V1\Services\UserService $token */
             $token = app(UserService::class, compact('user'));
-            $access_token = $token->createToken()->plainTextToken;
+            $token = $token->createToken()->plainTextToken;
 
-            return response(compact('user', 'access_token'));
+            return response(compact('user', 'token'));
         }
 
         return response('', 403);
