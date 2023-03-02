@@ -43,4 +43,11 @@ class VehicleRepository extends RepositoryContract
     {
         return $this->getQueryWithFullInfo()->findOrFail($id);
     }
+
+    public function delete(): static
+    {
+        $this->vehicle->delete();
+
+        return $this;
+    }
 }

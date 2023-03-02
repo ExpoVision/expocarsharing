@@ -40,9 +40,17 @@ Route::apiResource('review', ReviewController::class)->only(['store', ...USERS_R
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
 Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
+
+Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
+    Route::apiResource('user', UserController::class);
+
+    Route::apiResource('vehicle', VehicleController::class)->only(ADMIN_ROUTES);
+    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
+    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
-    Route::apiResource('user', UserController::class);
 
     Route::resource('order', OrderController::class)->only(['show']);
     Route::group(['prefix' => 'order-process'], function () {
@@ -56,10 +64,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
         Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
     });
-
-    Route::apiResource('/vehicle', VehicleController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
 });
 
 Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
