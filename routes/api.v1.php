@@ -47,6 +47,8 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
     Route::apiResource('vehicle', VehicleController::class)->only(ADMIN_ROUTES);
     Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
     Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
+
+    Route::post('order/{order}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -59,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('confirmPayment/{order}', [OrderController::class, 'confirmPayment'])->name('order.confirmPayment');
         Route::post('rent/{order}', [OrderController::class, 'rent'])->name('order.rent');
         Route::post('finish/{order}', [OrderController::class, 'finish'])->name('order.finish');
+        Route::post('cancel/{order}', [OrderController::class, 'cancel'])->name('order.cancel');
 
         Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
         Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');

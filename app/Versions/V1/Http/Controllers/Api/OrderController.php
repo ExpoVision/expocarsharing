@@ -118,4 +118,14 @@ class OrderController extends Controller
 
         return new OrderRentedCollection($orders);
     }
+
+    public function cancel(Request $request, Order $order): OrderResource
+    {
+        /** @var OrderService $service */
+        $service = app(OrderService::class, compact('order'));
+
+        $order = $service->cancel();
+
+        return new OrderResource($order);
+    }
 }

@@ -20,9 +20,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\User $user
  * @property-read \App\Models\Offer $offer
  * @property-read \App\Models\Vehicle $vehicle
- * @property-read \Carbon\Carbon $started_at
- * @property-read \Carbon\CarbonInterval $active_in
- * @property-read \Carbon\Carbon|null $finished_at
+ * @property \Carbon\Carbon $started_at
+ * @property \Carbon\CarbonInterval $active_in
+ * @property \Carbon\Carbon|null $finished_at
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @property-read \Carbon\Carbon|null $deleted_at
@@ -42,6 +42,7 @@ class Order extends Model
     public const STATUS_FINISH             = 'FINISH';
     public const STATUS_BROKEN             = 'BROKEN';
     public const STATUS_ERROR              = 'ERROR';
+    public const STATUS_CANCELED           = 'CANCELED';
 
     public static array $statuses = [
         self::STATUS_RESERVED           => 'ожидание доставки',
@@ -51,6 +52,7 @@ class Order extends Model
         self::STATUS_FINISH             => 'завершен',
         self::STATUS_BROKEN             => 'сломано',
         self::STATUS_ERROR              => '¯\_(ツ)_/¯',
+        self::STATUS_CANCELED           => 'отменен',
     ];
 
     protected $perPage = 18;

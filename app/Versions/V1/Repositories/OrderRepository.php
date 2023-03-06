@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Repositories;
 
+use App\Models\Offer;
 use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
@@ -26,6 +27,11 @@ class OrderRepository extends RepositoryContract
     public function getOrder(): Order
     {
         return $this->order;
+    }
+
+    public function getOffer(): Offer
+    {
+        return $this->order->offer;
     }
 
     /**
