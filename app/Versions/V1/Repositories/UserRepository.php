@@ -19,6 +19,11 @@ class UserRepository extends RepositoryContract
         return $this->user->newQuery();
     }
 
+    public function count(): int
+    {
+        return $this->getQuery()->count();
+    }
+
     public function getUser(): User
     {
         return $this->user;

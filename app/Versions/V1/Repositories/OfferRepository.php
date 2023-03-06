@@ -25,6 +25,11 @@ class OfferRepository extends RepositoryContract
         return $this->offer;
     }
 
+    public function count(): int
+    {
+        return $this->getQuery()->count();
+    }
+
     public function paginate(?int $perPage = null): LengthAwarePaginator
     {
         return $this->getQuery()->paginate($perPage);

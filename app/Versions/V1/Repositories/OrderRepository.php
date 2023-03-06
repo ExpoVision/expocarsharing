@@ -47,6 +47,11 @@ class OrderRepository extends RepositoryContract
         return $this->getQuery()->where('status', $status)->paginate($perPage);
     }
 
+    public function countByStatus(string $status): int
+    {
+        return $this->getQuery()->where('status', $status)->count();
+    }
+
     public function getById(int $id): Order
     {
         return $this->getQuery()->findOrFail($id);

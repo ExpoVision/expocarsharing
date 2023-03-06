@@ -8,6 +8,7 @@ use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
 use App\Versions\V1\Http\Controllers\Api\ReviewController;
+use App\Versions\V1\Http\Controllers\Api\StatisticsController;
 use App\Versions\V1\Http\Controllers\Api\UserController;
 use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
@@ -40,6 +41,7 @@ Route::apiResource('review', ReviewController::class)->only(['store', ...USERS_R
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
 Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
+Route::get('service/statistics', StatisticsController::class)->name('service.statistics');
 
 Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
     Route::apiResource('user', UserController::class);
