@@ -17,6 +17,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('address')->nullable();
+            $table->string('username')->nullable();
             $table->foreignId('offer_id')
                 ->constrained()
                 ->cascadeOnUpdate();
