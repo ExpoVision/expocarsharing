@@ -4,9 +4,7 @@ namespace App\Versions\V1\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Versions\V1\DTO\UserDto;
-use App\Versions\V1\DTO\UserPasswordDto;
 use App\Versions\V1\Http\Controllers\Controller;
-use App\Versions\V1\Http\Requests\UserPasswordUpdateRequest;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
 use App\Versions\V1\Http\Resources\Order\OrderResourceFactory;
 use App\Versions\V1\Http\Resources\UserResource;
@@ -14,6 +12,7 @@ use App\Versions\V1\Repositories\OrderRepository;
 use App\Versions\V1\Services\UserService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -36,6 +35,16 @@ class UserController extends Controller
     public function show(Request $request, User $user): UserResource
     {
         return new UserResource($user);
+    }
+
+    public function destroy(Request $request, User $user): Response
+    {
+        /** @var UserService $service */
+        $this->service = app(UserService::class, compact('user'));
+
+        $this->service->delete();
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     public function getCurrentUserOrder(Request $request): ?OrderResource

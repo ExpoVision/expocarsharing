@@ -43,6 +43,13 @@ class UserRepository extends RepositoryContract
         return $this;
     }
 
+    public function delete(): static
+    {
+        $this->user->delete();
+
+        return $this;
+    }
+
     public function createToken(array $abilities = ['*']): NewAccessToken
     {
         return $this->user->createToken($this->user->email, $abilities);
