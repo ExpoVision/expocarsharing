@@ -6,6 +6,7 @@ use App\Caster\DatetimeCaster;
 use App\Caster\RequestModelBindIdCaster;
 use App\Models\Offer;
 use App\Models\Order;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Spatie\DataTransferObject\Attributes\CastWith;
@@ -13,7 +14,10 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class OrderDto extends DataTransferObject
 {
-    public int $user_id;
+    public ?string $username;
+    public ?string $address;
+    #[CastWith(RequestModelBindIdCaster::class)]
+    public int|User $user_id;
     #[CastWith(RequestModelBindIdCaster::class)]
     public int|Offer $offer_id;
     #[CastWith(DatetimeCaster::class)]

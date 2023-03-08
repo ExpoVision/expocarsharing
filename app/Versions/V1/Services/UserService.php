@@ -51,6 +51,13 @@ class UserService
         return $this;
     }
 
+    public function delete(): static
+    {
+        $this->repository->delete();
+
+        return $this;
+    }
+
     public function createToken(array $abilities = ['*']): NewAccessToken
     {
         return $this->repository->createToken($abilities);

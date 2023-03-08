@@ -19,6 +19,11 @@ class UserRepository extends RepositoryContract
         return $this->user->newQuery();
     }
 
+    public function count(): int
+    {
+        return $this->getQuery()->count();
+    }
+
     public function getUser(): User
     {
         return $this->user;
@@ -34,6 +39,13 @@ class UserRepository extends RepositoryContract
     public function save(): static
     {
         $this->user->save();
+
+        return $this;
+    }
+
+    public function delete(): static
+    {
+        $this->user->delete();
 
         return $this;
     }

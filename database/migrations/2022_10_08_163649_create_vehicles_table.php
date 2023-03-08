@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('vehicle_class_id')->constrained();
             $table->float('mileage');
             $table->year('year');
+            $table->string('license_plate')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use App\Versions\V1\Http\Controllers\Api\FilterController;
 use App\Versions\V1\Http\Controllers\Api\OfferController;
 use App\Versions\V1\Http\Controllers\Api\OrderController;
 use App\Versions\V1\Http\Controllers\Api\ReviewController;
+use App\Versions\V1\Http\Controllers\Api\StatisticsController;
 use App\Versions\V1\Http\Controllers\Api\UserController;
 use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
@@ -40,9 +41,20 @@ Route::apiResource('review', ReviewController::class)->only(['store', ...USERS_R
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
 Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
+Route::get('service/statistics', StatisticsController::class)->name('service.statistics');
+
+Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
+    Route::apiResource('user', UserController::class);
+
+    Route::apiResource('vehicle', VehicleController::class)->only(ADMIN_ROUTES);
+    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
+    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
+
+    Route::post('order/{order}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
-    Route::apiResource('user', UserController::class);
 
     Route::resource('order', OrderController::class)->only(['show']);
     Route::group(['prefix' => 'order-process'], function () {
@@ -51,15 +63,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('confirmPayment/{order}', [OrderController::class, 'confirmPayment'])->name('order.confirmPayment');
         Route::post('rent/{order}', [OrderController::class, 'rent'])->name('order.rent');
         Route::post('finish/{order}', [OrderController::class, 'finish'])->name('order.finish');
+        Route::post('cancel/{order}', [OrderController::class, 'cancel'])->name('order.cancel');
 
         Route::get('reserved',   [OrderController::class, 'reserved'])->name('order.reserved');
         Route::get('rented',     [OrderController::class, 'rented'])->name('order.rented');
         Route::get('confirming', [OrderController::class, 'confirming'])->name('order.confirming');
     });
-
-    Route::apiResource('/vehicle', VehicleController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
 });
 
 Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');

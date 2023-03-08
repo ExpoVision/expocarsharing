@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Repositories;
 
+use App\Models\Offer;
 use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
@@ -28,6 +29,11 @@ class OrderRepository extends RepositoryContract
         return $this->order;
     }
 
+    public function getOffer(): Offer
+    {
+        return $this->order->offer;
+    }
+
     /**
      * @todo refactor
      */
@@ -39,6 +45,11 @@ class OrderRepository extends RepositoryContract
     public function getByStatus(string $status, ?int $perPage = null): LengthAwarePaginator
     {
         return $this->getQuery()->where('status', $status)->paginate($perPage);
+    }
+
+    public function countByStatus(string $status): int
+    {
+        return $this->getQuery()->where('status', $status)->count();
     }
 
     public function getById(int $id): Order
