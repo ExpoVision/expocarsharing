@@ -40,4 +40,9 @@ class OrderService
 
         return $this->order;
     }
+
+    public function forceCancel(): Order
+    {
+        return $this->cancel();
+    }
 }
