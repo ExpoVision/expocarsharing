@@ -42,6 +42,8 @@ class User extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
+    protected $perPage = 28;
+
     const ROLE_USER = 'USER';
     const ROLE_ADMIN = 'ADMIN';
 

@@ -21,11 +21,11 @@ class AuthenticateWithAdminRole
         $requestUser = $request->user();
 
         if (!$requestUser) {
-            return new AuthenticationException();
+            return response(__('auth.failed'), 401);
         }
 
         if ($requestUser->role === User::ROLE_USER) {
-            return new AuthenticationException(__('auth.permission_denied'));
+            return response(__('auth.deny'), 403);
         }
 
         return $next($request);

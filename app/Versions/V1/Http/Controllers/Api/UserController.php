@@ -5,10 +5,12 @@ namespace App\Versions\V1\Http\Controllers\Api;
 use App\Models\User;
 use App\Versions\V1\DTO\UserDto;
 use App\Versions\V1\Http\Controllers\Controller;
+use App\Versions\V1\Http\Resources\Collections\UserCollection;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
 use App\Versions\V1\Http\Resources\Order\OrderResourceFactory;
 use App\Versions\V1\Http\Resources\UserResource;
 use App\Versions\V1\Repositories\OrderRepository;
+use App\Versions\V1\Repositories\UserRepository;
 use App\Versions\V1\Services\UserService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
@@ -17,9 +19,15 @@ use Illuminate\Http\Response;
 class UserController extends Controller
 {
     public function __construct(
+        public UserRepository $repository,
         public UserService $service,
         public OrderRepository $orderRepository,
     ) {
+    }
+
+    public function index(Request $request)
+    {
+        return new UserCollection($this->repository->paginate());
     }
 
     public function update(Request $request, User $user): UserResource
