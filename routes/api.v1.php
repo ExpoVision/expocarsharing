@@ -57,7 +57,7 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
 
-    Route::resource('order', OrderController::class)->only(['show']);
+    Route::resource('order', OrderController::class)->only(['index', 'show']);
     Route::group(['prefix' => 'order-process'], function () {
         Route::post('reserv/{offer}', [OrderController::class, 'reserv'])->name('order.reserv');
         Route::post('confirmRent/{order}', [OrderController::class, 'confirmRent'])->name('order.confirmRent');

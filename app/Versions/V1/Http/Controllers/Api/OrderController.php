@@ -29,6 +29,13 @@ class OrderController extends Controller
     ) {
     }
 
+    public function index(Request $request): OrderCollection
+    {
+        $orders = $this->repository->paginate();
+
+        return new OrderCollection($orders);
+    }
+
     public function show(Request $request, Order $order): OrderResource
     {
         return new OrderResource($order);

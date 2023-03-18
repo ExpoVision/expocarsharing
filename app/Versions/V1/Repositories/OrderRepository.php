@@ -42,6 +42,11 @@ class OrderRepository extends RepositoryContract
         return $user->order;
     }
 
+    public function paginate(?int $perPage = null): LengthAwarePaginator
+    {
+        return $this->getQuery()->paginate($perPage);
+    }
+
     public function getByStatus(string $status, ?int $perPage = null): LengthAwarePaginator
     {
         return $this->getQuery()->where('status', $status)->paginate($perPage);
