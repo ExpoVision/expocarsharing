@@ -17,6 +17,7 @@ class OrderRentedResource extends OrderResource
         $offer = $this->offer;
 
         return [
+            'id' => $this->id,
             'status' => $this->status,
             'time' => $this->active_in->forHumans(),
             'per_minute' => $offer->per_minute,

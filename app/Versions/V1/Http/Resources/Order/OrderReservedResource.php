@@ -26,6 +26,7 @@ class OrderReservedResource extends OrderResource
         $courier = '¯\_(ツ)_/¯';
 
         return [
+            'id' => $this->id,
             'status' => Order::$statuses[$this->status],
             ...compact('vehicleName', 'address', 'courier'),
             ...compact('user', 'offer', 'vehicle'),

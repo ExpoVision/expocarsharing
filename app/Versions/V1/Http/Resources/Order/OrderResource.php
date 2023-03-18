@@ -23,6 +23,7 @@ class OrderResource extends JsonResource
         $offer = $this->offer;
 
         return [
+            'id' => $this->id,
             'vehicle' => new VehicleResource($vehicle),
             'user' => new UserResource($user),
             'offer' => new OfferResource($offer),

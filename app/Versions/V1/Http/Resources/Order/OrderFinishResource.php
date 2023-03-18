@@ -31,6 +31,7 @@ class OrderFinishResource extends JsonResource
         $finishPrice = app(PriceService::class)->orderFinishPrice($orderDto, $offerDto);
 
         return [
+            'id' => $this->id,
             'status' => $this->status,
             'price' => $finishPrice,
             ...compact('vehicle', 'user', 'offer'),
