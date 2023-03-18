@@ -14,8 +14,10 @@ class OfferResource extends JsonResource
      */
     public function toArray($request)
     {
+        $vehicle = $this->vehicle->load('info');
+
         return [
-            'vehicle' => new VehicleResource($this->vehicle),
+            'vehicle' => new VehicleResource($vehicle),
             'per_minute' => $this->per_minute,
         ];
     }

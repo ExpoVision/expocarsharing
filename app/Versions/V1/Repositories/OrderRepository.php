@@ -47,6 +47,11 @@ class OrderRepository extends RepositoryContract
         return $this->getQuery()->where('status', $status)->paginate($perPage);
     }
 
+    public function getTrashed(?int $perPage = null): LengthAwarePaginator
+    {
+        return $this->getQuery()->onlyTrashed()->paginate($perPage);
+    }
+
     public function countByStatus(string $status): int
     {
         return $this->getQuery()->where('status', $status)->count();

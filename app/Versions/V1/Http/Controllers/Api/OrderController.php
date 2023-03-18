@@ -6,6 +6,7 @@ use App\Models\Offer;
 use App\Models\Order;
 use App\Versions\V1\DTO\OrderDto;
 use App\Versions\V1\Http\Controllers\Controller;
+use App\Versions\V1\Http\Resources\Collections\Order\OrderCollection;
 use App\Versions\V1\Http\Resources\Collections\Order\OrderConfirmingCollection;
 use App\Versions\V1\Http\Resources\Collections\Order\OrderRentedCollection;
 use App\Versions\V1\Http\Resources\Collections\Order\OrderReservedCollection;
@@ -23,7 +24,8 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     public function __construct(
-        public OrderService $service
+        public OrderService $service,
+        public OrderRepository $repository,
     ) {
     }
 
@@ -137,5 +139,12 @@ class OrderController extends Controller
         $order = $service->forceCancel();
 
         return new OrderResource($order);
+    }
+
+    public function archival(Request $request): OrderCollection
+    {
+        $orders = $this->repository->getTrashed();
+
+        return new OrderCollection($orders);
     }
 }

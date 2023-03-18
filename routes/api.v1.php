@@ -51,6 +51,7 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
     Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
 
     Route::post('order/{order}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+    Route::get('order/archival', [OrderController::class, 'archival'])->name('order.archival');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

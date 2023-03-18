@@ -27,7 +27,7 @@ class OrderReservedResource extends OrderResource
 
         return [
             'id' => $this->id,
-            'status' => Order::$statuses[$this->status],
+            'status' => $this->status,
             ...compact('vehicleName', 'address', 'courier'),
             ...compact('user', 'offer', 'vehicle'),
         ];
