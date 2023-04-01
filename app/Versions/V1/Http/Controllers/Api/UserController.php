@@ -5,6 +5,7 @@ namespace App\Versions\V1\Http\Controllers\Api;
 use App\Models\User;
 use App\Versions\V1\DTO\UserDto;
 use App\Versions\V1\Http\Controllers\Controller;
+use App\Versions\V1\Http\Requests\UserPasswordUpdateRequest;
 use App\Versions\V1\Http\Resources\Collections\UserCollection;
 use App\Versions\V1\Http\Resources\Order\OrderResource;
 use App\Versions\V1\Http\Resources\Order\OrderResourceFactory;
@@ -28,6 +29,16 @@ class UserController extends Controller
     public function index(Request $request)
     {
         return new UserCollection($this->repository->paginate());
+    }
+
+    public function updatePassword(UserPasswordUpdateRequest $request, User $user)
+    {
+        /** @var UserService $service */
+        $this->service = app(UserService::class, compact('user'));
+
+        $this->service->updatePassword(UserDto::fromRequest($request));
+
+        return response('', Response::HTTP_OK);
     }
 
     public function update(Request $request, User $user): UserResource

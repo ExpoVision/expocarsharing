@@ -3,6 +3,7 @@
 namespace App\Versions\V1\Http\Controllers\Api\Auth;
 
 use App\Versions\V1\Http\Requests\LoginRequest;
+use App\Versions\V1\Http\Resources\UserResource;
 use App\Versions\V1\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,8 @@ class AuthController
             /** @var \App\Versions\V1\Services\UserService $token */
             $token = app(UserService::class, compact('user'));
             $token = $token->createToken()->plainTextToken;
+
+            $user = new UserResource($user);
 
             return response(compact('user', 'token'));
         }

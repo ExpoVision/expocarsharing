@@ -60,4 +60,11 @@ class UserRepository extends RepositoryContract
     {
         return $this->user->createToken($this->user->email, $abilities);
     }
+
+    public function revokeTokens(): static
+    {
+        $this->user->tokens()->delete();
+
+        return $this;
+    }
 }

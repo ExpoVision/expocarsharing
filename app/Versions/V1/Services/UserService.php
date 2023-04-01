@@ -41,6 +41,15 @@ class UserService
         return $this;
     }
 
+    public function updatePassword(UserDto $dto): static
+    {
+        $this->revokeTokens();
+
+        $this->update($dto);
+
+        return $this;
+    }
+
     public function storeAdmin(AdminDto $data): static
     {
         $this->repository
@@ -61,5 +70,12 @@ class UserService
     public function createToken(array $abilities = ['*']): NewAccessToken
     {
         return $this->repository->createToken($abilities);
+    }
+
+    public function revokeTokens(): static
+    {
+        $this->repository->revokeTokens();
+
+        return $this;
     }
 }

@@ -54,9 +54,13 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
-    Route::resource('user-pay', UserPayController::class)->only(['store']);
-    Route::resource('user-profile', UserProfileController::class)->only(['store']);
+    Route::post('fetchProfile', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
+    Route::post('user-password/{user}', [UserController::class, 'updatePassword'])->name('user.password-update');
+
+    Route::get('user-pay/{user}', [UserPayController::class, 'show'])->name('user-pay.show');
+    Route::get('user-profile/{user}', [UserProfileController::class, 'show'])->name('user-profile.show');
+    Route::post('user-pay', [UserPayController::class, 'store'])->name('user-pay.store');
+    Route::post('user-profile', [UserProfileController::class, 'store'])->name('user-profile.store');
 
     Route::resource('order', OrderController::class)->only(['index', 'show']);
     Route::group(['prefix' => 'order-process'], function () {
