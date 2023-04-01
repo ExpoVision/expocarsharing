@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Order::class);
     }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function pay(): HasOne
+    {
+        return $this->hasOne(UserPay::class);
+    }
 }

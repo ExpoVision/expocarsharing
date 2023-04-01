@@ -1,5 +1,6 @@
 <?php
 
+use App\Versions\V1\Http\Controllers\Api\UserPayController;
 use App\Versions\V1\Http\Controllers\Api\Auth\AuthController;
 use App\Versions\V1\Http\Controllers\Api\Auth\RegisterController;
 use App\Versions\V1\Http\Controllers\Api\FaqController;
@@ -10,6 +11,7 @@ use App\Versions\V1\Http\Controllers\Api\OrderController;
 use App\Versions\V1\Http\Controllers\Api\ReviewController;
 use App\Versions\V1\Http\Controllers\Api\StatisticsController;
 use App\Versions\V1\Http\Controllers\Api\UserController;
+use App\Versions\V1\Http\Controllers\Api\UserProfileController;
 use App\Versions\V1\Http\Controllers\Api\VehicleClassController;
 use App\Versions\V1\Http\Controllers\Api\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -25,30 +27,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-const USERS_ROUTES = ['show', 'index'];
-const ADMIN_ROUTES = ['edit', 'create', 'update', 'store', 'destroy'];
-
 Route::post('/register', [RegisterController::class, 'register'])->name('auth.register');
 Route::post('/admin/register', [RegisterController::class, 'adminRegister'])->name('auth.admin.register');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-Route::apiResource('offer', OfferController::class)->only(USERS_ROUTES);
-Route::apiResource('vehicle', VehicleController::class)->only(USERS_ROUTES);
-Route::apiResource('vehicle-class', VehicleClassController::class)->only(USERS_ROUTES);
-Route::apiResource('faq', FaqController::class)->only(USERS_ROUTES);
-Route::apiResource('review', ReviewController::class)->only(['store', ...USERS_ROUTES]);
+Route::apiResource('offer', OfferController::class)->only(['show', 'index']);
+Route::apiResource('vehicle', VehicleController::class)->only(['show', 'index']);
+Route::apiResource('vehicle-class', VehicleClassController::class)->only(['show', 'index']);
+Route::apiResource('faq', FaqController::class)->only(['show', 'index']);
+Route::apiResource('review', ReviewController::class)->only(['store', 'show', 'index']);
 
 Route::get('feedback/archival', [FeedbackController::class, 'archival'])->name('feedback.archival');
-Route::apiResource('feedback', FeedbackController::class)->only(USERS_ROUTES);
+Route::apiResource('feedback', FeedbackController::class)->only(['show', 'index']);
 Route::get('service/statistics', StatisticsController::class)->name('service.statistics');
 
 Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
     Route::apiResource('user', UserController::class);
 
-    Route::apiResource('vehicle', VehicleController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('feedback', FeedbackController::class)->only(ADMIN_ROUTES);
-    Route::apiResource('offer', OfferController::class)->only(ADMIN_ROUTES);
+    Route::apiResource('vehicle', VehicleController::class)->only(['edit', 'create', 'update', 'store', 'destroy']);
+    Route::apiResource('feedback', FeedbackController::class)->only(['edit', 'create', 'update', 'store', 'destroy']);
+    Route::apiResource('offer', OfferController::class)->only(['edit', 'create', 'update', 'store', 'destroy']);
 
     Route::post('order/{order}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
     Route::get('order/archival', [OrderController::class, 'archival'])->name('order.archival');
@@ -56,6 +55,8 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
+    Route::resource('user-pay', UserPayController::class)->only(['store']);
+    Route::resource('user-profile', UserProfileController::class)->only(['store']);
 
     Route::resource('order', OrderController::class)->only(['index', 'show']);
     Route::group(['prefix' => 'order-process'], function () {

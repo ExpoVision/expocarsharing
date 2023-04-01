@@ -50,6 +50,7 @@ return [
     'enum' => 'The selected :attribute is invalid.',
     'exists' => 'The selected :attribute is invalid.',
     'file' => 'The :attribute must be a file.',
+    'request_file' => 'Request does not contain file with key :key',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
         'array' => 'The :attribute must have more than :value items.',

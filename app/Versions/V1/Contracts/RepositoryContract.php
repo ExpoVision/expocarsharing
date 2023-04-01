@@ -2,9 +2,10 @@
 
 namespace App\Versions\V1\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
-
 abstract class RepositoryContract
 {
-    public abstract function getQuery(): Builder;
+    /**
+     * @return Illuminate\Database\Eloquent\Builder|QueryBuiIlluminate\Database\Query\Builder
+     */
+    public abstract function getQuery();
 }
