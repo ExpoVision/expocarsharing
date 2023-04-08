@@ -8,13 +8,15 @@ use App\Versions\V1\Http\Requests\UserRegisterRequest;
 class UserDto extends UserDtoAbstract
 {
     /**
-     * @param UserRegisterRequest $request
+     * @param UserRegisterRequest|array $request
      *
      * @return static
      */
     public static function fromRequest($request)
     {
-        return new self($request->all() + [
+        $requestData = is_array($request) ? $request : $request->all();
+
+        return new self($requestData + [
             'role' => User::ROLE_USER
         ]);
     }

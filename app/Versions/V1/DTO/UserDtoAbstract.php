@@ -3,7 +3,6 @@
 namespace App\Versions\V1\DTO;
 
 use App\Caster\HashMakeCaster;
-use Illuminate\Http\Request;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
 

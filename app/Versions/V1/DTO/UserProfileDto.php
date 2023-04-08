@@ -5,7 +5,7 @@ namespace App\Versions\V1\DTO;
 use App\Caster\DatetimeCaster;
 use App\Caster\RequestModelBindIdCaster;
 use App\Traits\InteractsWithDto;
-use App\Versions\V1\Http\Requests\UserProfileStoreRequest;
+use App\Versions\V1\Http\Requests\UserProfileUpdateRequest;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Spatie\DataTransferObject\Attributes\CastWith;
@@ -24,8 +24,15 @@ class UserProfileDto extends DataTransferObject
     #[CastWith(RequestModelBindIdCaster::class)]
     public int $user_id;
 
-    public static function fromRequest(UserProfileStoreRequest $request): static
+    /**
+     * @param UserProfileUpdateRequest|array $request
+     *
+     * @return static
+     */
+    public static function fromRequest($request): static
     {
-        return new self($request->validated());
+        $requestData = is_array($request) ? $request : $request->validated();
+
+        return new self($requestData);
     }
 }
