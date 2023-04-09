@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UserRegisterRequest extends FormRequest
 {
+    private const IMAGE_MAX_SIZE_KB = 7000;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,11 +31,11 @@ class UserRegisterRequest extends FormRequest
             'user.password' => ['required', 'min:4', 'confirmed'],
             'user.password_confirmation' => ['required'],
 
-            'profile.birthday' => ['date'],
-            'profile.phone'    => [],
-            'profile.photo'    => ['image'],
-            'profile.passport' => ['file', 'mimes:pdf'],
-            'profile.license'  => ['file', 'mimes:pdf'],
+            'profile.birthday' => ['required', 'date'],
+            'profile.phone'    => ['required'],
+            'profile.photo'    => ['required', 'image'],
+            'profile.passport' => ['required', 'image', 'max:' . self::IMAGE_MAX_SIZE_KB],
+            'profile.license'  => ['required', 'image', 'max:' . self::IMAGE_MAX_SIZE_KB],
         ];
     }
 }
