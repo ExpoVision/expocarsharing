@@ -16,9 +16,12 @@ class AuthController
             /** @var \App\Models\User $user */
             $user = auth()->user();
 
-            /** @var \App\Versions\V1\Services\UserService $token */
-            $token = app(UserService::class, compact('user'));
-            $token = $token->createToken()->plainTextToken;
+            /** @var \App\Versions\V1\Services\UserService $service */
+            $service = app(UserService::class, compact('user'));
+
+            $service->revokeTokens();
+
+            $token = $service->createToken()->plainTextToken;
 
             $user = new UserResource($user);
 

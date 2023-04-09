@@ -25,7 +25,7 @@ class UserProfileRepository extends RepositoryContract
     {
         $this->userProfile = $this->userProfile->updateOrCreate(
             ['user_id' => $dto->user_id],
-            $dto->onlyString(),
+            $dto->withoutFiles(),
         );
 
         return $this;

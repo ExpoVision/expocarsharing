@@ -27,6 +27,30 @@ class OrderController extends Controller
         public OrderService $service,
         public OrderRepository $repository,
     ) {
+        $this->authorizeResource(Order::class);
+    }
+
+    protected function resourceAbilityMap()
+    {
+        return [
+            ...parent::resourceAbilityMap(),
+            'confirmPayment' => 'confirmPayment',
+            'confirmRent' => 'confirmRent',
+            'finish' => 'finish',
+            'reserv' => 'reserv',
+            'rent' => 'rent',
+        ];
+    }
+
+    protected function resourceMethodsWithoutModels()
+    {
+        return [
+            ...parent::resourceMethodsWithoutModels(),
+            'confirmPayment',
+            'confirmRent',
+            'reserv',
+            'rent',
+        ];
     }
 
     public function index(Request $request): OrderCollection
