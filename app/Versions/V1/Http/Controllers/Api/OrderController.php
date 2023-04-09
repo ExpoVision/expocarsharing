@@ -82,53 +82,42 @@ class OrderController extends Controller
 
     public function confirmRent(Request $request, Order $order)
     {
-        /** @var OrderRepository $order */
-        $order = app(OrderRepository::class, ['order' => $order]);
-        $order->updateStatus(Order::STATUS_CONFIRMING_RENT)->save();
+        /** @var OrderService $service */
+        $service = app(OrderService::class, compact('order'));
 
-        return new OrderConfirmingResource($order->getOrder());
+        $order = $service->confirmRent();
+
+        return new OrderConfirmingResource($order);
     }
 
     public function confirmPayment(Request $request, Order $order)
     {
-        /** @var OrderRepository $order */
-        $order = app(OrderRepository::class, ['order' => $order]);
+        /** @var OrderService $service */
+        $service = app(OrderService::class, compact('order'));
 
-        $order->updateStatus(Order::STATUS_CONFIRMING_PAYMENT)->save();
+        $order = $service->confirmPayment();
 
-        return new OrderConfirmingResource($order->getOrder());
+        return new OrderConfirmingResource($order);
     }
 
     public function rent(Request $request, Order $order)
     {
-        /** @var OrderRepository $order */
-        $order = app(OrderRepository::class, ['order' => $order]);
+        /** @var OrderService $service */
+        $service = app(OrderService::class, compact('order'));
 
-        DB::transaction(function () use ($order) {
-            $order->startRent();
-            $order->updateStatus(Order::STATUS_RENTED)->save();
-        });
+        $order = $service->rent();
 
-        return new OrderRentedResource($order->getOrder());
+        return new OrderRentedResource($order);
     }
 
     public function finish(Request $request, Order $order)
     {
-        $offer = $order->offer;
+        /** @var OrderService $service */
+        $service = app(OrderService::class, compact('order'));
 
-        /** @var OrderRepository $order */
-        $order = app(OrderRepository::class, ['order' => $order]);
-        /** @var OfferRepository $offer */
-        $offer = app(OfferRepository::class, ['offer' => $offer]);
+        $order = $service->finish();
 
-        DB::transaction(function () use ($order, $offer) {
-            $order->finishRent()->save();
-            $order->delete();
-
-            $offer->makeAvailable();
-        });
-
-        return new OrderFinishResource($order->getOrder());
+        return new OrderFinishResource($order);
     }
 
     public function reserved(Request $request): OrderReservedCollection

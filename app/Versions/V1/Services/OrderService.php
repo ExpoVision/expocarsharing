@@ -25,15 +25,67 @@ class OrderService
         return $this->order;
     }
 
+    public function confirmRent(): Order
+    {
+        $this->repository
+            ->updateStatus(Order::STATUS_CONFIRMING_RENT)
+            ->save();
+
+        return $this->repository->getOrder();
+    }
+
+    public function confirmPayment(): Order
+    {
+        $this->repository
+            ->updateStatus(Order::STATUS_CONFIRMING_PAYMENT)
+            ->save();
+
+        return $this->repository->getOrder();
+    }
+
+    public function rent()
+    {
+        DB::transaction(function () {
+            $this->repository
+                ->startRent()
+                ->updateStatus(Order::STATUS_RENTED)
+                ->save();
+        });
+
+        return $this->repository->getOrder();
+    }
+
+    public function finish()
+    {
+        /** @var OfferRepository $offerRepository */
+        $offerRepository = app(OfferRepository::class, [
+            'offer' => $this->repository->getOffer()
+        ]);
+
+        DB::transaction(function () use ($offerRepository) {
+            $this->repository
+                ->finishRent()
+                ->save()
+                ->delete();
+
+            $offerRepository->makeAvailable();
+        });
+
+        return $this->repository->getOrder();
+    }
+
     public function cancel(): Order
     {
-        $offer = $this->repository->getOffer();
         /** @var OfferRepository $offerRepository */
-        $offerRepository = app(OfferRepository::class, compact('offer'));
+        $offerRepository = app(OfferRepository::class, [
+            'offer' => $this->repository->getOffer(),
+        ]);
 
-        DB::transaction(function() use ($offerRepository) {
-            $this->repository->updateStatus(Order::STATUS_CANCELED)->save();
-            $this->repository->delete();
+        DB::transaction(function () use ($offerRepository) {
+            $this->repository
+                ->updateStatus(Order::STATUS_CANCELED)
+                ->save()
+                ->delete();
 
             $offerRepository->makeAvailable();
         });
