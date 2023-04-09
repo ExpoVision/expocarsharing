@@ -43,7 +43,7 @@ Route::apiResource('feedback', FeedbackController::class)->only(['show', 'index'
 Route::get('service/statistics', StatisticsController::class)->name('service.statistics');
 
 Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
-    Route::apiResource('user', UserController::class)->only(['index', 'update', 'show', 'destroy']);
+    Route::apiResource('user', UserController::class)->only(['index', 'show', 'destroy']);
 
     Route::apiResource('vehicle', VehicleController::class)->only(['edit', 'create', 'update', 'store', 'destroy']);
     Route::apiResource('feedback', FeedbackController::class)->only(['edit', 'create', 'update', 'store', 'destroy']);
@@ -57,6 +57,7 @@ Route::middleware(['auth:sanctum', 'auth.admin'])->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('user', UserController::class)->only('update');
     Route::post('fetchProfile', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
     Route::post('user-password/{user}', [UserController::class, 'updatePassword'])->name('user.password-update');
 

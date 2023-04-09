@@ -10,6 +10,8 @@ use Laravel\Sanctum\NewAccessToken;
 
 class UserService
 {
+    const IMAGE_MAX_SIZE_KB = 7000;
+
     private UserRepository $repository;
 
     public function __construct(

@@ -2,11 +2,11 @@
 
 namespace App\Versions\V1\Http\Requests;
 
+use App\Versions\V1\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRegisterRequest extends FormRequest
 {
-    private const IMAGE_MAX_SIZE_KB = 7000;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -34,8 +34,8 @@ class UserRegisterRequest extends FormRequest
             'profile.birthday' => ['required', 'date'],
             'profile.phone'    => ['required'],
             'profile.photo'    => ['required', 'image'],
-            'profile.passport' => ['required', 'image', 'max:' . self::IMAGE_MAX_SIZE_KB],
-            'profile.license'  => ['required', 'image', 'max:' . self::IMAGE_MAX_SIZE_KB],
+            'profile.passport' => ['required', 'image', 'max:' . UserService::IMAGE_MAX_SIZE_KB],
+            'profile.license'  => ['required', 'image', 'max:' . UserService::IMAGE_MAX_SIZE_KB],
         ];
     }
 }

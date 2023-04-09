@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Http\Requests;
 
+use App\Versions\V1\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserProfileUpdateRequest extends FormRequest
@@ -26,9 +27,9 @@ class UserProfileUpdateRequest extends FormRequest
         return [
             'birthday' => ['date'],
             'phone'    => [],
-            'photo'    => ['image'],
-            'passport' => ['file', 'mimes:pdf'],
-            'license'  => ['file', 'mimes:pdf'],
+            'photo'    => ['image', 'max:' . UserService::IMAGE_MAX_SIZE_KB],
+            'passport' => ['image', 'max:' . UserService::IMAGE_MAX_SIZE_KB],
+            'license'  => ['image', 'max:' . UserService::IMAGE_MAX_SIZE_KB],
             'user_id'  => ['required'],
         ];
     }
