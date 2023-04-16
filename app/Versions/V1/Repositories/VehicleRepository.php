@@ -20,6 +20,11 @@ class VehicleRepository extends RepositoryContract
         return $this->vehicle->newQuery();
     }
 
+    public function filterBy(array $attrs): Builder
+    {
+        return $this->vehicle->filterBy($attrs);
+    }
+
     public function getQueryWithBaseRelations(): Builder
     {
         return $this->getQuery()->with(['brand', 'brandModel', 'color', 'class']);

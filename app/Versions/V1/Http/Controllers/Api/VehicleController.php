@@ -31,7 +31,9 @@ class VehicleController extends Controller
 
     public function index(Request $request)
     {
-        return new VehicleCollection($this->repository->paginate());
+        $builder = $this->repository->filterBy($request->all());
+
+        return new VehicleCollection($builder->paginate());
     }
 
     public function show(Request $request, int $id): VehicleResource

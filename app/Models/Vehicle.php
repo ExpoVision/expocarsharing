@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,11 +30,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @property-read \Carbon\Carbon|null $deleted_at
+ * @method \Illuminate\Database\Eloquent\Builder filterBy(array $filters)
  */
 class Vehicle extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Filterable;
 
     public const FILTER_FOLDER = 'Vehicle';
 
