@@ -6,18 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class FilterBuilder
 {
-    protected Builder $query;
-    protected array $filters;
-    protected string $folder;
-
     public function __construct(
-        Builder $query,
-        array $filters,
-        string $folder
+        protected Builder $query,
+        protected array $filters,
+        protected string $folder
     ) {
-        $this->query = $query;
-        $this->filters = $filters;
-        $this->folder = $folder;
     }
 
     public function apply(): Builder

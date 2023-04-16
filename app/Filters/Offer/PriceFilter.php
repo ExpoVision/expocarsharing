@@ -9,7 +9,7 @@ class PriceFilter extends FilterContract
 {
     public function handle(string|array $value): void
     {
-        [$from, $to] = explode(',', $value);
+        [$from, $to] = $value;
 
         if (!$from || !$to) {
             /** @var OfferRepository $offerRepository */

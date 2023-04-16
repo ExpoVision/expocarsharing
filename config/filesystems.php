@@ -1,5 +1,7 @@
 <?php
 
+use App\MediaSaver\VehicleMediaManager;
+
 return [
 
     /*
@@ -79,6 +81,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path(VehicleMediaManager::MEDIA_FOLDER) => storage_path('app/public/' . VehicleMediaManager::MEDIA_FOLDER),
         public_path('users') => storage_path('app/public/users')
     ],
 

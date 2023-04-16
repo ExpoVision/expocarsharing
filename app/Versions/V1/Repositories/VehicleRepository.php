@@ -59,16 +59,6 @@ class VehicleRepository extends RepositoryContract
         return $this;
     }
 
-    public function saveMedia(array $images): static
-    {
-        /** @var VehicleMediaManager $mediaManager */
-        $mediaManager = app(VehicleMediaManager::class, compact('images'));
-
-        $mediaManager->save();
-
-        return $this;
-    }
-
     public function delete(): static
     {
         $this->vehicle->delete();

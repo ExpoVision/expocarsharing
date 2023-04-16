@@ -41,7 +41,7 @@ class Offer extends Model
         self::STATUS_UNAVAILABLE => 'активная аренда',
     ];
 
-    protected $fillable = ['per_minute'];
+    protected $fillable = ['per_minute', 'vehicle_id', 'status'];
 
     protected $casts = [
         'created_at' => 'datetime',

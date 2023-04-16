@@ -7,7 +7,7 @@ use App\Filters\FilterBuilder;
 
 trait Filterable
 {
-    public function scopeFilterBy(Builder &$query, array $filters): Builder
+    public function scopeFilterBy(Builder $query, array $filters): Builder
     {
         $folder = static::FILTER_FOLDER;
 

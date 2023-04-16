@@ -3,6 +3,7 @@
 namespace App\Versions\V1\DTO;
 
 use App\Versions\V1\Http\Requests\VehicleStoreRequest;
+use Illuminate\Http\UploadedFile;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class VehicleDto extends DataTransferObject
@@ -16,7 +17,7 @@ class VehicleDto extends DataTransferObject
     public int $year;
     public string $license_plate;
     /**
-     * @var array<\Illuminate\Http\UploadedFile>
+     * @var array<UploadedFile>
      */
     public array $images;
 

@@ -61,6 +61,13 @@ class OfferRepository extends RepositoryContract
         return $this;
     }
 
+    public function fill(array $data): static
+    {
+        $this->offer->fill($data);
+
+        return $this;
+    }
+
     public function save(): void
     {
         $this->offer->save();

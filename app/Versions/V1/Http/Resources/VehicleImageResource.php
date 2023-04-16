@@ -4,7 +4,7 @@ namespace App\Versions\V1\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OfferResource extends JsonResource
+class VehicleImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,6 @@ class OfferResource extends JsonResource
      */
     public function toArray($request)
     {
-        $vehicle = $this->vehicle->load(['info', 'images']);
-
-        return [
-            'vehicle' => new VehicleResource($vehicle),
-            'per_minute' => $this->per_minute,
-        ];
+        return parent::toArray($request);
     }
 }

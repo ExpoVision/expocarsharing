@@ -20,7 +20,6 @@ class VehicleService
     {
         $this->repository
             ->fill($dto->toArray())
-            ->saveMedia($dto->images)
             ->save();
 
         return $this->vehicle;

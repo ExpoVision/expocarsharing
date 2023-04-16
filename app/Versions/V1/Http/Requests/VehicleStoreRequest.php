@@ -47,6 +47,8 @@ class VehicleStoreRequest extends FormRequest
             'vehicle_info.transmission'       => ['required', "in:$transmissions"],
             'vehicle_info.multimedia'         => ['required', 'boolean'],
             'vehicle_info.seats'              => ['required', 'integer', 'min:0'],
+
+            'offer.per_minute'                => ['required', 'numeric'],
         ];
     }
 }

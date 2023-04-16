@@ -4,6 +4,7 @@ namespace App\Versions\V1\Http\Resources;
 
 use App\Versions\V1\Http\Resources\BrandModelResource;
 use App\Versions\V1\Http\Resources\BrandResource;
+use App\Versions\V1\Http\Resources\Collections\VehicleImageCollection;
 use App\Versions\V1\Http\Resources\ColorResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,8 +23,9 @@ class VehicleResource extends JsonResource
         $color = new ColorResource($this->color);
         $info  = new VehicleInfoResource($this->whenLoaded('info'));
         $class = new VehicleClassResource($this->whenLoaded('class'));
+        $images = new VehicleImageCollection($this->whenLoaded('images'));
 
-        $relations = compact('brand', 'model', 'color', 'info', 'class');
+        $relations = compact('brand', 'model', 'color', 'info', 'class', 'images');
 
         return [
             'id' => $this->id,

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \App\Models\VehicleInfo $info
  * @property \App\Models\Offer $offer
  * @property \App\Models\VehicleClass $class
+ * @property \App\Models\VehicleImage[] $images
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @property-read \Carbon\Carbon|null $deleted_at
@@ -80,5 +82,10 @@ class Vehicle extends Model
     public function class(): BelongsTo
     {
         return $this->belongsTo(VehicleClass::class, 'vehicle_class_id', 'id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(VehicleImage::class);
     }
 }
