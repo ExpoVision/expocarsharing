@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="/favicon.ico">
     <title>carsharing</title>
-    <script defer="defer" src="/js/chunk-vendors.fba6630b.js"></script>
-    <script defer="defer" src="/js/app.0b21a225.js"></script>
-    <link href="/css/app.193b0c93.css" rel="stylesheet">
+    <script defer="defer" src="/js/chunk-vendors.884a1e21.js"></script>
+    <script defer="defer" src="/js/app.9c2142ab.js"></script>
+    <link href="/css/app.b30ba48e.css" rel="stylesheet">
     <title>{{ env('APP_NAME') }}</title>
 </head>
 
