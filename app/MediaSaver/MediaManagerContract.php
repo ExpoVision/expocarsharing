@@ -4,7 +4,7 @@ namespace App\MediaSaver;
 
 use Illuminate\Http\UploadedFile;
 
-class MediaManager
+abstract class MediaManagerContract
 {
     public function saveTo(UploadedFile $file, string $folder, array|string $options)
     {

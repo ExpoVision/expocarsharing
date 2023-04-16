@@ -10,7 +10,7 @@ class BrandModelsFilter extends FilterContract
     public function handle(string|array $value): void
     {
         $this->query->whereHas('vehicle', function (Builder $query) use ($value) {
-            $query->whereHas('brand', function (Builder $query) use ($value) {
+            $query->whereHas('brandModel', function (Builder $query) use ($value) {
                 $query->whereIn('id', $value);
             });
         });

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\WithVehicleScope;
-use App\Traits\HasFilter;
+use App\Traits\Filterable;
 use App\Traits\HasVehicle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +29,7 @@ class Offer extends Model
     use HasFactory;
     use HasVehicle;
     use SoftDeletes;
-    use HasFilter;
+    use Filterable;
 
     public const FILTER_FOLDER = 'Offer';
 

@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Repositories;
 
+use App\MediaSaver\VehicleMediaManager;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\Vehicle;
 use App\Versions\V1\Contracts\RepositoryContract;
@@ -42,6 +43,30 @@ class VehicleRepository extends RepositoryContract
     public function find(int $id): Vehicle
     {
         return $this->getQueryWithFullInfo()->findOrFail($id);
+    }
+
+    public function fill(array $data): static
+    {
+        $this->vehicle->fill($data);
+
+        return $this;
+    }
+
+    public function save(): static
+    {
+        $this->vehicle->save();
+
+        return $this;
+    }
+
+    public function saveMedia(array $images): static
+    {
+        /** @var VehicleMediaManager $mediaManager */
+        $mediaManager = app(VehicleMediaManager::class, compact('images'));
+
+        $mediaManager->save();
+
+        return $this;
     }
 
     public function delete(): static

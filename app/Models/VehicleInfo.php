@@ -34,11 +34,13 @@ class VehicleInfo extends Model
     ];
 
     protected $fillable = [
-        'power_reserve',
         'power_reserve_unit',
-        'consumption',
-        'horsepower',
+        'power_reserve',
         'transmission',
+        'body_type_id',
+        'consumption',
+        'vehicle_id',
+        'horsepower',
         'multimedia',
         'seats',
     ];

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use App\Traits\HasFilter;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -16,6 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $brand_model_id
  * @property int $color_id
  * @property int $vehicle_info_id
+ * @property string $license_plate
+ * @property int $vehicle_class_id
  * @property float $mileage
  * @property int $year
  * @property \App\Models\Brand $brand
@@ -31,14 +31,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Vehicle extends Model
 {
     use HasFactory;
-    use HasFilter;
     use SoftDeletes;
 
     public const FILTER_FOLDER = 'Vehicle';
 
     protected $fillable = [
         'brand_id',
-        'model_id',
+        'brand_model_id',
+        'vehicle_class_id',
+        'license_plate',
         'color_id',
         'vehicle_info_id',
         'mileage',

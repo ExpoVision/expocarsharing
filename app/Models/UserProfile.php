@@ -42,9 +42,10 @@ class UserProfile extends Model
                         UserProfileMediaManager::class,
                         [
                             'model' => $this,
-                            'file' => $dto->$key,
+                            'file'  => $dto->$key,
+                            'key'   => $key,
                         ],
-                    )->save($key);
+                    )->save();
 
                     $this->$key = $path;
                     $this->save();
