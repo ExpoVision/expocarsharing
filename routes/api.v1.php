@@ -79,3 +79,4 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('filter-values', [FilterController::class, 'getFilterValues'])->name('filter.values');
+Route::get('filter-consts', [FilterController::class, 'getFilterConsts'])->name('filter.consts');
