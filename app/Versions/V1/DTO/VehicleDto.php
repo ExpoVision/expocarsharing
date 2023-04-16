@@ -19,7 +19,7 @@ class VehicleDto extends DataTransferObject
     /**
      * @var array<UploadedFile>
      */
-    public array $images;
+    public ?array $images;
 
     public static function fromRequest(VehicleStoreRequest $request): static
     {

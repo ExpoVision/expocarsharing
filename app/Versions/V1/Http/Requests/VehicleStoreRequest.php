@@ -36,7 +36,7 @@ class VehicleStoreRequest extends FormRequest
             'vehicle.mileage'          => ['required', 'numeric'],
             'vehicle.license_plate'    => ['required'],
             'vehicle.year'             => ['required', 'integer', 'min:1900', "max:$currentYear"],
-            'vehicle.images'           => ['required'],
+            'vehicle.images'           => [],
             'vehicle.images.*'         => ['image'],
 
             'vehicle_info.body_type_id'       => ['required', 'integer', 'exists:body_types,id'],

@@ -47,16 +47,16 @@ class VehicleController extends Controller
             $vehicleDto = VehicleDto::fromRequest($request);
             $vehicle = $this->service->store($vehicleDto);
 
-            /** @var VehicleInfoService $infoService */
+            /** @var VehicleInfoService $infosService */
             $infosService = app(VehicleInfoService::class, compact('vehicle'));
-            /** @var VehicleImageService $imgeService */
+            /** @var VehicleImageService $imageService */
             $imageService = app(VehicleImageService::class, compact('vehicle'));
             /** @var OfferService $offerService */
             $offerService = app(OfferService::class);
 
             $infosService->store(VehicleInfoDto::fromRequest($request));
             $offerService->store(OfferDto::fromVehicleWithAttrs($vehicle->id, $request->input('offer')));
-            $imageService->storeMedia($vehicleDto->images);
+            $imageService->storeMedia($vehicleDto->images ?? []);
         });
 
         return response('', Response::HTTP_OK);
