@@ -16,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Carbon\Carbon $email_verified_at
  * @property string $password
  * @property-read string $remember_token
+ * @property-read string $role
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @property-read \App\Models\Order $order
