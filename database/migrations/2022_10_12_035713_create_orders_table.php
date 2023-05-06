@@ -20,9 +20,11 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('username')->nullable();
             $table->foreignId('offer_id')
+                ->unique()
                 ->constrained()
                 ->cascadeOnUpdate();
             $table->foreignId('user_id')
+                ->unique()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
