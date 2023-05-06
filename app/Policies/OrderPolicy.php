@@ -60,9 +60,9 @@ class OrderPolicy
         return $user->role === User::ROLE_ADMIN;
     }
 
-    public function rent(User $user)
+    public function rent(User $user, Order $order)
     {
-        return $user->role === User::ROLE_ADMIN;
+        return $user->role === User::ROLE_ADMIN  || $user->id === $order->user_id;
     }
 
     public function finish(User $user, Order $order)

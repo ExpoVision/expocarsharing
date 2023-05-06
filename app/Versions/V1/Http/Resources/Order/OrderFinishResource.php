@@ -29,11 +29,14 @@ class OrderFinishResource extends JsonResource
 
         /** @var PriceService $finishPrice */
         $finishPrice = app(PriceService::class)->orderFinishPrice($orderDto, $offerDto);
+        $finishIn = $orderDto->started_at->diffAsCarbonInterval($orderDto->finished_at);
 
         return [
             'id' => $this->id,
             'status' => $this->status,
             'price' => $finishPrice,
+            'finish_in' => $finishIn->forHumans(),
+
             ...compact('vehicle', 'user', 'offer'),
         ];
     }

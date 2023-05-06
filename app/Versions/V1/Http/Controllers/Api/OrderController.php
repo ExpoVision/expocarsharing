@@ -49,7 +49,6 @@ class OrderController extends Controller
             'confirmPayment',
             'confirmRent',
             'reserv',
-            'rent',
         ];
     }
 
