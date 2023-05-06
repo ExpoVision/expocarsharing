@@ -10,6 +10,7 @@ class ReviewDto extends DataTransferObject
     public string $name;
     public string $review;
     public ?string $title;
+    public int $evaluation;
 
     /**
      * @param ReviewStoreRequest $request

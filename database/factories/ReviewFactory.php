@@ -20,6 +20,7 @@ class ReviewFactory extends Factory
             'name' => $this->faker->name,
             'title' => $this->faker->jobTitle,
             'review' => $this->faker->text,
+            'evaluation' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $title
  * @property string $review
+ * @property int $evaluation
  * @property-read \Carbon\Carbon|null $created_at
  * @property-read \Carbon\Carbon|null $updated_at
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -22,6 +23,7 @@ class Review extends Model
         'name',
         'title',
         'review',
+        'evaluation',
     ];
 
     protected $casts = [

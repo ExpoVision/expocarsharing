@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->text('review');
+            $table->smallInteger('evaluation');
             $table->timestamps();
         });
     }
