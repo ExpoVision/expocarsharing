@@ -21,7 +21,9 @@ class ReviewController extends Controller
 
     public function index(Request $request): ReviewCollection
     {
-        return new ReviewCollection($this->repository->paginate());
+        $perGroup = $request->input('per_page');
+
+        return new ReviewCollection($this->repository->paginate($perGroup));
     }
 
     public function store(ReviewStoreRequest $request): ReviewResource
