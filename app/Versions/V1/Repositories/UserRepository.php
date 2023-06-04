@@ -2,6 +2,7 @@
 
 namespace App\Versions\V1\Repositories;
 
+use App\Models\Order;
 use App\Models\User;
 use App\Versions\V1\Contracts\RepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
@@ -66,5 +67,10 @@ class UserRepository extends RepositoryContract
         $this->user->tokens()->delete();
 
         return $this;
+    }
+
+    public function getOrder(): Order
+    {
+        return $this->user->order;
     }
 }

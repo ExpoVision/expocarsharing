@@ -61,6 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('fetchProfile', [UserController::class, 'fetchProfile'])->name('user.fetchProfile');
     Route::post('user-password/{user}', [UserController::class, 'updatePassword'])->name('user.password-update');
 
+    Route::get('user/order', [UserController::class, 'order'])->name('user.order');
     Route::get('user-pay/{user}', [UserPayController::class, 'show'])->name('user-pay.show');
     Route::get('user-profile/{user}', [UserProfileController::class, 'show'])->name('user-profile.show');
     Route::post('user-pay', [UserPayController::class, 'store'])->name('user-pay.store');

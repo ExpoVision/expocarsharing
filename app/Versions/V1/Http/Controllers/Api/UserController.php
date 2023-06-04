@@ -81,4 +81,13 @@ class UserController extends Controller
     {
         return new UserResource($request->user());
     }
+
+    public function order(Request $request): OrderResource
+    {
+        $this->repository = app(UserRepository::class, [
+            'user' => auth()->user(),
+        ]);
+
+        return new OrderResource($this->repository->getOrder());
+    }
 }
